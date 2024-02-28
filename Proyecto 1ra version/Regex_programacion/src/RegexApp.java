@@ -18,11 +18,11 @@ public class RegexApp {
 	
 	public void iniciarApp() {
 		// Números naturales
-		String regexNatural = "\\b\\d+\\b";
+        	String regexNatural = "\\b(?<![.,%])\\d+\\b(?![.,%])";
 		imprimirResultados(texto, regexNatural, "Números naturales");
 		
 		// Números reales
-		String regexReal = "\\b\\d+[.,]\\d+\\b";
+        	String regexReal = "\\b(?<!\\.)\\d+[.,]\\d+\\b(?!\\.|\\d)";
 		imprimirResultados(texto, regexReal, "Números reales");
 		
 		// Números porcentuales
