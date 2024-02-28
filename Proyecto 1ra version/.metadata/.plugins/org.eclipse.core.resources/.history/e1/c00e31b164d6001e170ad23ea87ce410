@@ -23,7 +23,7 @@ public class RegexApp {
 
     public void iniciarApp() {
         // Números naturales "\\b(?<![.,%])\\d+\\b(?![.,%])"
-        String regexNatural = "\\s\\d+[,.]?\\s";
+        String regexNatural = "^\\s\\d+[,.]?\\s$";
         imprimirResultados(texto, regexNatural, "Natural");
 
         // Números reales

@@ -22,8 +22,8 @@ public class RegexApp {
             "43%).";
 
     public void iniciarApp() {
-        // Números naturales "\\b(?<![.,%])\\d+\\b(?![.,%])"
-        String regexNatural = "\\s\\d+[,.]?\\s";
+        // Números naturales \\b(?<![.,%])\\d+\\b(?![.,%])[.,]?
+        String regexNatural = "\\b(?<![.,%])\\d+\\b(?![.,%])[.,\\S]";
         imprimirResultados(texto, regexNatural, "Natural");
 
         // Números reales
