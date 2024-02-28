@@ -1,0 +1,89 @@
+    import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class Main {
+    public static class Resultado {
+        int numero;
+        int linea;
+        String cadena;
+        String tipo;
+
+        public Resultado(int numero, int linea, String cadena, String tipo) {
+            this.numero = numero;
+            this.linea = linea;
+            this.cadena = cadena;
+            this.tipo = tipo;
+        }
+    }
+
+    public static void main(String[] args) {
+        String texto = "Estos datos positivos también tienen su correlación con la salud. La tasa de mortalidad\r\n" + //
+                        "entre los recién nacidos era de 64,8 por cada 1.000 en 1990. Pero en 2016, la realidad\r\n" + //
+                        "era bien diferente, ya que solo 30,5B fallecían por cada 1.000 (en 26 años se ha reducido un\r\n" + //
+                        "53%). Igual de positivo es la caída de la mortalidad entre los menores de 5A; en 26 años se\r\n" + //
+                        "ha pasado de una tasa de 93,4 fallecidos por 1.0E2 a un 40,8 (una reducción del 56%).\r\n" + //
+                        "De igual manera, el número de mujeres que fallece durante el parto también ha decrecido\r\n" + //
+                        "(en 1990 el número de muertes fue de 532.000 y en 2015 de 303.00.0, una disminución del\r\n" + //
+                        "43%) 5.";
+
+        List<Resultado> resultados = new ArrayList<>();
+        int count = 1;
+
+        // Números naturales
+        String regexNatural = "\\b(?<![.,%])\\d+\\b(?![.,%])";
+        count = buscarCoincidencias(texto, regexNatural, "Números naturales", resultados, count);
+
+        // Números reales
+        String regexReal = "\\b(?<!\\.)\\d+[.,]\\d+\\b(?!\\.|\\d)";
+        count = buscarCoincidencias(texto, regexReal, "Números reales", resultados, count);
+
+        // Números porcentuales
+        String regexPorcentajes = "\\d+[%)]";
+        count = buscarCoincidencias(texto, regexPorcentajes,  "Números porcentuales", resultados, count);
+
+        // Números exponenciales
+        String regexExponencial = "\\d+(?:[.,]\\d+[Ee]\\d{1,}|[Ee]\\d{1,})";
+        count = buscarCoincidencias(texto, regexExponencial,  "Números exponenciales", resultados, count);
+
+        // Números no válidos
+        String regexNoValidos = "\\b\\d+[.,]\\d+[B]\\b|\\b\\d+[.,]\\d+[.][0]\\b";
+        buscarCoincidencias(texto, regexNoValidos,  "Números no válidos", resultados, count);
+
+        imprimirResultados(resultados);
+    }
+
+    public static int buscarCoincidencias(String texto, String regex, String tipo, List<Resultado> resultados, int count) {
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(texto);
+
+        while (matcher.find()) {
+            int lineNumber = getLineNumber(texto, matcher.start());
+            resultados.add(new Resultado(count, lineNumber, matcher.group(), tipo));
+            count++;
+        }
+        return count;
+    }
+
+    public static void imprimirResultados(List<Resultado> resultados) {
+        System.out.println(String.format("%-5s %-10s %-15s %s", "No.", "No. Línea", "Cadena", "Tipo"));
+        for (Resultado resultado : resultados) {
+            System.out.println(String.format("%-5d %-10d %-15s %s", resultado.numero, resultado.linea, resultado.cadena, resultado.tipo));
+        }
+    }
+
+    public static int getLineNumber(String texto, int index) {
+        String[] lines = texto.split("\r\n");
+        int lineNumber = 1;
+        int currentIndex = 0;
+        for (String line : lines) {
+            currentIndex += line.length() + 2;
+            if (currentIndex > index) {
+                return lineNumber;
+            }
+            lineNumber++;
+        }
+        return -1;
+    }
+}
