@@ -17,21 +17,26 @@ public class RegexApp {
             "43%).";
 	
 	public void iniciarApp() {
-		// Números naturales
-		String regexNatural = "\\b\\d+\\b";
-		imprimirResultados(texto, regexNatural, "Números naturales");
-		
-		// Números reales
-		String regexReal = "\\b\\d+[.,]\\d+\\b";
-		imprimirResultados(texto, regexReal, "Números reales");
-		
-		// Números porcentuales
-		String regexPorcentajes = "\\d+[%)]";
-		imprimirResultados(texto, regexPorcentajes, "Números porcentuales");
-		
-		// Números exponenciales
-		String regexExponencial = "\\d+(?:[.,]\\d+[Ee]\\d{1,}|[Ee]\\d{1,})";
-		imprimirResultados(texto, regexExponencial, "Números exponenciales");
+
+        	// Números naturales
+        	String regexNatural = "\\b(?<![.,%])\\d+\\b(?![.,%])";
+        	count = buscarCoincidencias(texto, regexNatural, "Números naturales", resultados, count);
+
+        	// Números reales
+        	String regexReal = "\\b(?<!\\.)\\d+[.,]\\d+\\b(?!\\.|\\d)";
+        	count = buscarCoincidencias(texto, regexReal, "Números reales", resultados, count);
+
+        	// Números porcentuales
+        	String regexPorcentajes = "\\d+[%)]";
+       	 	count = buscarCoincidencias(texto, regexPorcentajes,  "Números porcentuales", resultados, count);
+
+        	// Números exponenciales
+        	String regexExponencial = "\\d+(?:[.,]\\d+[Ee]\\d{1,}|[Ee]\\d{1,})";
+        	count = buscarCoincidencias(texto, regexExponencial,  "Números exponenciales", resultados, count);
+
+        	// Números no válidos
+        	String regexNoValidos = "\\b\\d+[.,]\\d+[B]\\b|\\b\\d+[.,]\\d+[.][0]\\b";
+        	buscarCoincidencias(texto, regexNoValidos,  "Números no válidos", resultados, count);
 	}
 
 	public void imprimirResultados(String texto, String regex, String tipo) {
