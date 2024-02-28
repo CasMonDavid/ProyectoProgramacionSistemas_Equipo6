@@ -175,3 +175,203 @@ user global configuration and to define the default location to store repositori
 not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
 EGit might behave differently since they see different configuration options.
 This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY org.eclipse.jdt.core 4 4 2024-02-27 19:36:06.289
+!MESSAGE Failed to save JDT index: Index for /Regex_programacion
+!STACK 0
+java.io.IOException: Failed to read index data from file:/D:/Universidad%20(6to%20semestre)/Programación%20de%20Sistemas/Trabajos/ProyectoProgramacionSistemas_Equipo6/Proyecto%201ra%20version/.metadata/.plugins/org.eclipse.jdt.core/1600907800.index at offset 67 and size 788529152
+	at org.eclipse.jdt.internal.core.index.DiskIndex.readCategoryTable(DiskIndex.java:686)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeCategory(DiskIndex.java:486)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeCategories(DiskIndex.java:478)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeWith(DiskIndex.java:580)
+	at org.eclipse.jdt.internal.core.index.Index.save(Index.java:230)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.saveIndex(IndexManager.java:1156)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.saveIndexes(IndexManager.java:1200)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.notifyIdle(IndexManager.java:838)
+	at org.eclipse.jdt.internal.core.search.processing.JobManager.indexerLoop(JobManager.java:494)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: java.lang.OutOfMemoryError: Java heap space
+	at org.eclipse.jdt.internal.compiler.util.HashtableOfObject.<init>(HashtableOfObject.java:56)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.readCategoryTable(DiskIndex.java:682)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeCategory(DiskIndex.java:486)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeCategories(DiskIndex.java:478)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeWith(DiskIndex.java:580)
+	at org.eclipse.jdt.internal.core.index.Index.save(Index.java:230)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.saveIndex(IndexManager.java:1156)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.saveIndexes(IndexManager.java:1200)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.notifyIdle(IndexManager.java:838)
+	at org.eclipse.jdt.internal.core.search.processing.JobManager.indexerLoop(JobManager.java:494)
+	at org.eclipse.jdt.internal.core.search.processing.JobManager$$Lambda$566/0x00000001007230f8.run(Unknown Source)
+	... 1 more
+
+!ENTRY org.eclipse.jdt.core 4 4 2024-02-27 19:37:49.481
+!MESSAGE Failed to save JDT index: Index for /Regex_programacion
+!STACK 0
+java.io.IOException: Failed to read index data from file:/D:/Universidad%20(6to%20semestre)/Programación%20de%20Sistemas/Trabajos/ProyectoProgramacionSistemas_Equipo6/Proyecto%201ra%20version/.metadata/.plugins/org.eclipse.jdt.core/1600907800.index at offset 67 and size 788529152
+	at org.eclipse.jdt.internal.core.index.DiskIndex.readCategoryTable(DiskIndex.java:686)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeCategory(DiskIndex.java:486)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeCategories(DiskIndex.java:478)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeWith(DiskIndex.java:580)
+	at org.eclipse.jdt.internal.core.index.Index.save(Index.java:230)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.saveIndex(IndexManager.java:1156)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.saveIndexes(IndexManager.java:1200)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.notifyIdle(IndexManager.java:838)
+	at org.eclipse.jdt.internal.core.search.processing.JobManager.indexerLoop(JobManager.java:494)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: java.lang.OutOfMemoryError: Java heap space
+	at org.eclipse.jdt.internal.compiler.util.HashtableOfObject.<init>(HashtableOfObject.java:56)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.readCategoryTable(DiskIndex.java:682)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeCategory(DiskIndex.java:486)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeCategories(DiskIndex.java:478)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeWith(DiskIndex.java:580)
+	at org.eclipse.jdt.internal.core.index.Index.save(Index.java:230)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.saveIndex(IndexManager.java:1156)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.saveIndexes(IndexManager.java:1200)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.notifyIdle(IndexManager.java:838)
+	at org.eclipse.jdt.internal.core.search.processing.JobManager.indexerLoop(JobManager.java:494)
+	at org.eclipse.jdt.internal.core.search.processing.JobManager$$Lambda$566/0x00000001007230f8.run(Unknown Source)
+	... 1 more
+
+!ENTRY org.eclipse.jdt.core 4 4 2024-02-27 19:40:31.708
+!MESSAGE Failed to save JDT index: Index for /Regex_programacion
+!STACK 0
+java.io.IOException: Failed to read index data from file:/D:/Universidad%20(6to%20semestre)/Programación%20de%20Sistemas/Trabajos/ProyectoProgramacionSistemas_Equipo6/Proyecto%201ra%20version/.metadata/.plugins/org.eclipse.jdt.core/1600907800.index at offset 67 and size 788529152
+	at org.eclipse.jdt.internal.core.index.DiskIndex.readCategoryTable(DiskIndex.java:686)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeCategory(DiskIndex.java:486)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeCategories(DiskIndex.java:478)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeWith(DiskIndex.java:580)
+	at org.eclipse.jdt.internal.core.index.Index.save(Index.java:230)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.saveIndex(IndexManager.java:1156)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.saveIndexes(IndexManager.java:1200)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.notifyIdle(IndexManager.java:838)
+	at org.eclipse.jdt.internal.core.search.processing.JobManager.indexerLoop(JobManager.java:494)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: java.lang.OutOfMemoryError: Java heap space
+
+!ENTRY org.eclipse.jdt.core 4 4 2024-02-27 19:41:37.137
+!MESSAGE Failed to save JDT index: Index for /Regex_programacion
+!STACK 0
+java.io.IOException: Failed to read index data from file:/D:/Universidad%20(6to%20semestre)/Programación%20de%20Sistemas/Trabajos/ProyectoProgramacionSistemas_Equipo6/Proyecto%201ra%20version/.metadata/.plugins/org.eclipse.jdt.core/1600907800.index at offset 67 and size 788529152
+	at org.eclipse.jdt.internal.core.index.DiskIndex.readCategoryTable(DiskIndex.java:686)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeCategory(DiskIndex.java:486)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeCategories(DiskIndex.java:478)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeWith(DiskIndex.java:580)
+	at org.eclipse.jdt.internal.core.index.Index.save(Index.java:230)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.saveIndex(IndexManager.java:1156)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.saveIndexes(IndexManager.java:1200)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.notifyIdle(IndexManager.java:838)
+	at org.eclipse.jdt.internal.core.search.processing.JobManager.indexerLoop(JobManager.java:494)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: java.lang.OutOfMemoryError: Java heap space
+
+!ENTRY org.eclipse.jdt.core 4 4 2024-02-27 19:41:51.376
+!MESSAGE Failed to save JDT index: Index for /Regex_programacion
+!STACK 0
+java.io.IOException: Failed to read index data from file:/D:/Universidad%20(6to%20semestre)/Programación%20de%20Sistemas/Trabajos/ProyectoProgramacionSistemas_Equipo6/Proyecto%201ra%20version/.metadata/.plugins/org.eclipse.jdt.core/1600907800.index at offset 67 and size 788529152
+	at org.eclipse.jdt.internal.core.index.DiskIndex.readCategoryTable(DiskIndex.java:686)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeCategory(DiskIndex.java:486)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeCategories(DiskIndex.java:478)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeWith(DiskIndex.java:580)
+	at org.eclipse.jdt.internal.core.index.Index.save(Index.java:230)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.saveIndex(IndexManager.java:1156)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.saveIndexes(IndexManager.java:1200)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.notifyIdle(IndexManager.java:838)
+	at org.eclipse.jdt.internal.core.search.processing.JobManager.indexerLoop(JobManager.java:494)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: java.lang.OutOfMemoryError: Java heap space
+
+!ENTRY org.eclipse.jdt.core 4 4 2024-02-27 19:41:57.240
+!MESSAGE Failed to save JDT index: Index for /Regex_programacion
+!STACK 0
+java.io.IOException: Failed to read index data from file:/D:/Universidad%20(6to%20semestre)/Programación%20de%20Sistemas/Trabajos/ProyectoProgramacionSistemas_Equipo6/Proyecto%201ra%20version/.metadata/.plugins/org.eclipse.jdt.core/1600907800.index at offset 67 and size 788529152
+	at org.eclipse.jdt.internal.core.index.DiskIndex.readCategoryTable(DiskIndex.java:686)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeCategory(DiskIndex.java:486)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeCategories(DiskIndex.java:478)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeWith(DiskIndex.java:580)
+	at org.eclipse.jdt.internal.core.index.Index.save(Index.java:230)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.saveIndex(IndexManager.java:1156)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.saveIndexes(IndexManager.java:1200)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.notifyIdle(IndexManager.java:838)
+	at org.eclipse.jdt.internal.core.search.processing.JobManager.indexerLoop(JobManager.java:494)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: java.lang.OutOfMemoryError: Java heap space
+
+!ENTRY org.eclipse.jdt.core 4 4 2024-02-27 19:42:03.280
+!MESSAGE Failed to save JDT index: Index for /Regex_programacion
+!STACK 0
+java.io.IOException: Failed to read index data from file:/D:/Universidad%20(6to%20semestre)/Programación%20de%20Sistemas/Trabajos/ProyectoProgramacionSistemas_Equipo6/Proyecto%201ra%20version/.metadata/.plugins/org.eclipse.jdt.core/1600907800.index at offset 67 and size 788529152
+	at org.eclipse.jdt.internal.core.index.DiskIndex.readCategoryTable(DiskIndex.java:686)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeCategory(DiskIndex.java:486)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeCategories(DiskIndex.java:478)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeWith(DiskIndex.java:580)
+	at org.eclipse.jdt.internal.core.index.Index.save(Index.java:230)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.saveIndex(IndexManager.java:1156)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.saveIndexes(IndexManager.java:1200)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.notifyIdle(IndexManager.java:838)
+	at org.eclipse.jdt.internal.core.search.processing.JobManager.indexerLoop(JobManager.java:494)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: java.lang.OutOfMemoryError: Java heap space
+
+!ENTRY org.eclipse.jdt.core 4 4 2024-02-27 19:42:10.598
+!MESSAGE Failed to save JDT index: Index for /Regex_programacion
+!STACK 0
+java.io.IOException: Failed to read index data from file:/D:/Universidad%20(6to%20semestre)/Programación%20de%20Sistemas/Trabajos/ProyectoProgramacionSistemas_Equipo6/Proyecto%201ra%20version/.metadata/.plugins/org.eclipse.jdt.core/1600907800.index at offset 67 and size 788529152
+	at org.eclipse.jdt.internal.core.index.DiskIndex.readCategoryTable(DiskIndex.java:686)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeCategory(DiskIndex.java:486)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeCategories(DiskIndex.java:478)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeWith(DiskIndex.java:580)
+	at org.eclipse.jdt.internal.core.index.Index.save(Index.java:230)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.saveIndex(IndexManager.java:1156)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.saveIndexes(IndexManager.java:1200)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.notifyIdle(IndexManager.java:838)
+	at org.eclipse.jdt.internal.core.search.processing.JobManager.indexerLoop(JobManager.java:494)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: java.lang.OutOfMemoryError: Java heap space
+
+!ENTRY org.eclipse.jdt.core 4 4 2024-02-27 19:42:16.130
+!MESSAGE Failed to save JDT index: Index for /Regex_programacion
+!STACK 0
+java.io.IOException: Failed to read index data from file:/D:/Universidad%20(6to%20semestre)/Programación%20de%20Sistemas/Trabajos/ProyectoProgramacionSistemas_Equipo6/Proyecto%201ra%20version/.metadata/.plugins/org.eclipse.jdt.core/1600907800.index at offset 67 and size 788529152
+	at org.eclipse.jdt.internal.core.index.DiskIndex.readCategoryTable(DiskIndex.java:686)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeCategory(DiskIndex.java:486)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeCategories(DiskIndex.java:478)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeWith(DiskIndex.java:580)
+	at org.eclipse.jdt.internal.core.index.Index.save(Index.java:230)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.saveIndex(IndexManager.java:1156)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.saveIndexes(IndexManager.java:1200)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.notifyIdle(IndexManager.java:838)
+	at org.eclipse.jdt.internal.core.search.processing.JobManager.indexerLoop(JobManager.java:494)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: java.lang.OutOfMemoryError: Java heap space
+
+!ENTRY org.eclipse.jdt.core 4 4 2024-02-27 19:42:19.970
+!MESSAGE Failed to save JDT index: Index for /Regex_programacion
+!STACK 0
+java.io.IOException: Failed to read index data from file:/D:/Universidad%20(6to%20semestre)/Programación%20de%20Sistemas/Trabajos/ProyectoProgramacionSistemas_Equipo6/Proyecto%201ra%20version/.metadata/.plugins/org.eclipse.jdt.core/1600907800.index at offset 67 and size 788529152
+	at org.eclipse.jdt.internal.core.index.DiskIndex.readCategoryTable(DiskIndex.java:686)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeCategory(DiskIndex.java:486)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeCategories(DiskIndex.java:478)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeWith(DiskIndex.java:580)
+	at org.eclipse.jdt.internal.core.index.Index.save(Index.java:230)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.saveIndex(IndexManager.java:1156)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.saveIndexes(IndexManager.java:1200)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.notifyIdle(IndexManager.java:838)
+	at org.eclipse.jdt.internal.core.search.processing.JobManager.indexerLoop(JobManager.java:494)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: java.lang.OutOfMemoryError: Java heap space
+
+!ENTRY org.eclipse.jdt.core 4 4 2024-02-27 19:42:35.858
+!MESSAGE Failed to save JDT index: Index for /Regex_programacion
+!STACK 0
+java.io.IOException: Failed to read index data from file:/D:/Universidad%20(6to%20semestre)/Programación%20de%20Sistemas/Trabajos/ProyectoProgramacionSistemas_Equipo6/Proyecto%201ra%20version/.metadata/.plugins/org.eclipse.jdt.core/1600907800.index at offset 67 and size 788529152
+	at org.eclipse.jdt.internal.core.index.DiskIndex.readCategoryTable(DiskIndex.java:686)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeCategory(DiskIndex.java:486)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeCategories(DiskIndex.java:478)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeWith(DiskIndex.java:580)
+	at org.eclipse.jdt.internal.core.index.Index.save(Index.java:230)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.saveIndex(IndexManager.java:1156)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.saveIndexes(IndexManager.java:1200)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.notifyIdle(IndexManager.java:838)
+	at org.eclipse.jdt.internal.core.search.processing.JobManager.indexerLoop(JobManager.java:494)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: java.lang.OutOfMemoryError: Java heap space

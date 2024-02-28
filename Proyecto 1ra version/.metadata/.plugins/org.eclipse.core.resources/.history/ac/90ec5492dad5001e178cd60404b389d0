@@ -14,15 +14,15 @@ public class RegexApp {
             "ha pasado de una tasa de 93,4 fallecidos por 1.0E2 a un 40,8 (una reducción del 56%).\r\n" + //
             "De igual manera, el número de mujeres que fallece durante el parto también ha decrecido\r\n" + //
             "(en 1990 el número de muertes fue de 532.000 y en 2015 de 303.00.0, una disminución del\r\n" + //
-            "43%).";
+            "-43.6%).";
 	
 	public void iniciarApp() {
 		// Números naturales
-        String regexNatural = "\\b(?<![.,%])\\d+\\b(?![.,%])";
+        	String regexNatural = "\\b(?<![.,%])\\d+\\b(?![.,%])";
 		imprimirResultados(texto, regexNatural, "Números naturales");
 		
 		// Números reales
-        String regexReal = "\\b(?<!\\.)\\d+[.,]\\d+\\b(?!\\.|\\d)";
+        	String regexReal = "\\b(?<!\\.)\\d+[.,]\\d+\\b(?!\\.|\\d)";
 		imprimirResultados(texto, regexReal, "Números reales");
 		
 		// Números porcentuales

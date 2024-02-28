@@ -18,11 +18,11 @@ public class RegexApp {
 	
 	public void iniciarApp() {
 		// Números naturales
-        String regexNatural = "\\b(?<![.,%])\\d+\\b(?![.,%])";
+		String regexNatural = "\\b\\d+\\b";
 		imprimirResultados(texto, regexNatural, "Números naturales");
 		
 		// Números reales
-        String regexReal = "\\b(?<!\\.)\\d+[.,]\\d+\\b(?!\\.|\\d)";
+		String regexReal = "\\b\\d+[.,]\\d+\\b";
 		imprimirResultados(texto, regexReal, "Números reales");
 		
 		// Números porcentuales
@@ -32,10 +32,6 @@ public class RegexApp {
 		// Números exponenciales
 		String regexExponencial = "[+-]?\\d+(\\.\\d+)?([eE][+-]?\\d+)";
 		imprimirResultados(texto, regexExponencial, "Números exponenciales");
-		
-		// Números no válidos
-		String regexNoValidos = "\\b\\d+[.,]\\d+[B]\\b|\\b\\d+[.,]\\d+[.][0]\\b";
-		imprimirResultados(texto, regexNoValidos, "Números no válidos");
 	}
 
 	public void imprimirResultados(String texto, String regex, String tipo) {
