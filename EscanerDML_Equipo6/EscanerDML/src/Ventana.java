@@ -1,9 +1,13 @@
 import java.awt.Color;
 
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
 
 public class Ventana extends JFrame {
 	Escaner escan;
+	JTextArea areaTexto;
 	
 	public Ventana() {
 		escan = new Escaner();
@@ -17,7 +21,6 @@ public class Ventana extends JFrame {
 		panelMenu();
 	}
 	
-	// COLOCA UN PANEL VACIO ENCIMA DE LA VENTANA
 	public void panelMenu() {
 		JPanel pnlPrincipal = new JPanel();
 		pnlPrincipal.setSize(900,900);
@@ -26,7 +29,17 @@ public class Ventana extends JFrame {
 		pnlPrincipal.setLayout(null);
 		this.add(pnlPrincipal);
 		
+		areaTexto = new JTextArea();
+		areaTexto.setBounds(50, 50, 400, 400);
+		pnlPrincipal.add(areaTexto);
+		
+		JButton boton = new JButton("Analizar");
+		boton.setBounds(400, 550, 100, 50);
+		boton.addActionListener(e -> escan.iniciarApp(areaTexto.getText()));
+		pnlPrincipal.add(boton);
+		
 		this.repaint();
 		this.revalidate();
 	}
 }
+
