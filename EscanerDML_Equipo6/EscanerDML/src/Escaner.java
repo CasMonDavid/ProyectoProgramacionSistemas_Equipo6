@@ -26,28 +26,37 @@ public class Escaner {
 		//REGEX PARA DELIMITADORES
 		String regexDelimitadores = "[,.'()]";
 		//REGEX PARA DELIMITADORES
-		String regexIdentificadores = "[a-zA-Z_][a-zA-Z_0-9]+";
+		String regexIdentificadores = "[\\n]?[a-zA-Z_][a-zA-Z_0-9]+[\\n]?";
 		//REGEX PARA CONSTANTES
 		String regexConstantes = "(['][a-zA-Z-_0-9]+[']|[0-9]+)";
+		//REGEX PARA RELACIONALES
+		String regexRelaciones = "(>|<|=|>=|<=)";
 		
 
 		// SE LE PASA UNA CADENA YA DIVIDIDA Y LA ANALIZA SEGUN EL ORDEN
 		for (String palabra : arreglo) {
+			boolean esReservada = false;
 			Matcher matcherReservadas = Pattern.compile(regexReservadas, Pattern.CASE_INSENSITIVE).matcher(palabra);
 			Matcher matcherConstantes = Pattern.compile(regexConstantes).matcher(palabra);
 			Matcher matcherIdentificadores = Pattern.compile(regexIdentificadores).matcher(palabra);
+			Matcher matcherRelacionales = Pattern.compile(regexRelaciones).matcher(palabra);
 			
 			if (matcherReservadas.find()) {
 				propiedadesCadena.setResultados(1, palabra.length(), palabra); // TIPO DE PALABRA
 				propiedadesCadena.setNumLinea(encontrarLinea(matcherReservadas));
 				arrayResultados.add(propiedadesCadena);
+				esReservada=true;
 				//reservada
-			}else if (matcherIdentificadores.find()) {
+			}
+			if (!esReservada && matcherIdentificadores.find()) {
 				System.out.println("Identificador: "+matcherIdentificadores.group());
 			}
 			if(matcherConstantes.find()) {
 				System.out.println("Constante: " + matcherConstantes.group());
 				propiedadesCadena.setNumLinea(encontrarLinea(matcherConstantes));
+			}
+			if (matcherRelacionales.find()) {
+				System.out.println("relaciones: "+matcherRelacionales.group());
 			}
 			
 			for (char caracter : palabra.toCharArray()) {
@@ -99,8 +108,16 @@ public class Escaner {
 	}
 	
 	public String[] dividirTexto(String entradaUsuario) {
-		String[] texto = entradaUsuario.split(" ");
-		return texto;
+		String[] texto = entradaUsuario.split("\r\n");
+		String textoSinSaltos = "";
+		
+		for (String renglon : texto) {
+			textoSinSaltos += renglon+" ";
+		}
+		
+		String[] textoFinal = textoSinSaltos.split(" ");
+		
+		return textoFinal;
 	}
 	
 }
