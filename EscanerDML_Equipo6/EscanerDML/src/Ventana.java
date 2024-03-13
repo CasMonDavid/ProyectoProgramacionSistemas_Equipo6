@@ -25,12 +25,12 @@ public class Ventana extends JFrame {
 		JPanel pnlPrincipal = new JPanel();
 		pnlPrincipal.setSize(900,900);
 		pnlPrincipal.setLocation(0,0);
-		pnlPrincipal.setBackground(Color.white);
+		pnlPrincipal.setBackground(Color.cyan);
 		pnlPrincipal.setLayout(null);
 		this.add(pnlPrincipal);
 		
 		areaTexto = new JTextArea();
-		areaTexto.setBounds(50, 50, 400, 400);
+		areaTexto.setBounds(50, 50, 800, 400);
 		pnlPrincipal.add(areaTexto);
 		
 		JButton boton = new JButton("Analizar");

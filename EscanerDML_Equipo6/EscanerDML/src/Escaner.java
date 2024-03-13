@@ -18,29 +18,30 @@ public class Escaner {
 		String regexDelimitadores = "[,.'()]";
 		
 
-	// SE LE PASA UNA CADENA YA DIVIDIDA Y LA ANALIZA SEGUN EL ORDEN
-	for (String palabra : arreglo) {
-			Matcher matcherReservadas = Pattern.compile(regexReservadas).matcher(palabra);
+		// SE LE PASA UNA CADENA YA DIVIDIDA Y LA ANALIZA SEGUN EL ORDEN
+		for (String palabra : arreglo) {
+			Matcher matcherReservadas = Pattern.compile(regexReservadas, Pattern.CASE_INSENSITIVE).matcher(palabra);
+			
 			if (matcherReservadas.find()) {
-				System.out.println("Palabra reservada: "+palabra);
-			} else {
-				for (char caracter : palabra.toCharArray()) {
-					Matcher matcherOperadores = Pattern.compile(regexOperadores).matcher(String.valueOf(caracter));
-					Matcher matcherDelimitadores = Pattern.compile(regexDelimitadores).matcher(String.valueOf(caracter));
-					if (matcherOperadores.find()) {
-						System.out.println("Operador matemático: "+caracter);
-					} else if (matcherDelimitadores.find()) {
-						System.out.println("Delimitador: "+caracter);
-					}
+				System.out.println("Reservada: "+palabra);
+			}
+			
+			for (char caracter : palabra.toCharArray()) {
+				Matcher matcherOperadores = Pattern.compile(regexOperadores).matcher(String.valueOf(caracter));
+				Matcher matcherDelimitadores = Pattern.compile(regexDelimitadores).matcher(String.valueOf(caracter));
+				if (matcherOperadores.find()) {
+					System.out.println("Operador matemático: "+caracter);
+				} else if (matcherDelimitadores.find()) {
+					System.out.println("Delimitador: "+caracter);
 				}
 			}
+			
 		}
 		
 	}
 	
 	public String[] dividirTexto(String entradaUsuario) {
 		String[] texto = entradaUsuario.split(" ");
-		
 		return texto;
 	}
 	
