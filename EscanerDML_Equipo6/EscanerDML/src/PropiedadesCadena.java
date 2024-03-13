@@ -3,7 +3,7 @@ public class PropiedadesCadena {
     public String cadena;
     public int numLinea;
     public PropiedadesCadena(){
-        resultados = new int[3];
+        resultados = new int[6];
         resultados[0] = 0;
         resultados[1] = 0;
         resultados[2] = 0;

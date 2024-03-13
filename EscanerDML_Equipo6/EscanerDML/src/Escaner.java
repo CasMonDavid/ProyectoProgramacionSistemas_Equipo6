@@ -42,7 +42,7 @@ public class Escaner {
 			Matcher matcherRelacionales = Pattern.compile(regexRelaciones).matcher(palabra);
 			
 			if (matcherReservadas.find()) {
-				propiedadesCadena.setResultados(1, palabra.length(), palabra); // TIPO DE PALABRA
+				propiedadesCadena.setResultados(1, palabra.length(), matcherReservadas.group().toString()); // TIPO DE PALABRA
 				propiedadesCadena.setNumLinea(encontrarLinea(matcherReservadas));
 				arrayResultados.add(propiedadesCadena);
 				esReservada=true;
@@ -74,10 +74,31 @@ public class Escaner {
 					//delimitador
 				}
 			}
-			
+			if (!arrayResultados.isEmpty()) {
+		        arrayResultados.add(propiedadesCadena);
+		    } else {
+		        // Verificación de error de sintaxis: palabra no identificada
+		        System.out.println("Error de sintaxis en la línea " + encontrarLineaError(matcherReservadas) + ": " + palabra);
+		    }
 		}
 		return arrayResultados;
 		
+	}
+	
+	public int encontrarLineaError(Matcher matcher) { 
+		String[] lineas = entradaU.split("\r\n|\r|\n");
+		int caracterActual = 0;
+		int linea = 0;
+
+		for (String lineaTexto : lineas) {
+			caracterActual += lineaTexto.length() + 1; // Se suma 1 para contar el carácter de salto de línea
+			if (matcher.find() && matcher.start() < caracterActual) {
+				break;
+			}
+			linea++; 
+		}
+
+		return linea;
 	}
 	
 	public int encontrarLinea(Matcher matcher){
