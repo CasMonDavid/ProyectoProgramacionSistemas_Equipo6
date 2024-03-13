@@ -3,41 +3,46 @@ import java.util.regex.Pattern;
 
 public class Escaner {
 	
-	public Escaner(){
-		iniciarApp();
+	public void iniciarApp(String entradaUsuario) {
+		analizarCadena(dividirTexto(entradaUsuario));
 	}
 	
-	//LOS EJEMPLOS SON MUESTRAS CORRECTAS DE LO QUE DEBERIA SER CAPAZ DE ANALIZAR COMO CORRECTO
-	String ejemploUno = "SELECT *\r\n"+
-						"FROM PROFESORES\r\n"+
-						"WHERE EDAD >45 AND GRADO='MAE' OR GRADO='DOC'";
-	
-	String ejemploDos = "SELECT SELECT SELECT , , ,";
-	
-	public void iniciarApp() {
-		analizarCadena(dividirTexto());
-	}
-	
-	// SE LE PASA UNA CADENA YA DIVIDIDA Y LA ANALIZA SEGUN EL ORDEN
 	public void analizarCadena(String[] arreglo) {
+		//REGEX PARA PALABRAS RESERVADAS
 		String regexReservadas = "\\b(SELECT|INSERT|UPDATE|DELETE|CREATE|DROP|ALTER|FROM|JOIN|WHERE|GROUP BY|ORDER BY|HAVING|AND|OR|NOT|AS|INTO|VALUES|"
 									+"SET|TABLE|DATABASE|INDEX|FOREIGN KEY|PRIMARY KEY|UNIQUE|CHECK|DEFAULT|NULL|IS|LIKE|IN|BETWEEN|EXISTS|ALL|ANY|CASE|"
 									+"WHEN|THEN|ELSE|END|LIMIT)\\b";
+		//REGEX PARA OPERADORES
+		String regexOperadores = "[+\\-*/]";
+		//REGEX PARA DELIMITADORES
+		String regexDelimitadores = "[,.'()]";
 		
-		for (String palabra : arreglo) {
-			Matcher matcher = Pattern.compile(regexReservadas).matcher(palabra);
-			if (matcher.find()) {
+
+	// SE LE PASA UNA CADENA YA DIVIDIDA Y LA ANALIZA SEGUN EL ORDEN
+	for (String palabra : arreglo) {
+			Matcher matcherReservadas = Pattern.compile(regexReservadas).matcher(palabra);
+			if (matcherReservadas.find()) {
 				System.out.println("Palabra reservada: "+palabra);
+			} else {
+				for (char caracter : palabra.toCharArray()) {
+					Matcher matcherOperadores = Pattern.compile(regexOperadores).matcher(String.valueOf(caracter));
+					Matcher matcherDelimitadores = Pattern.compile(regexDelimitadores).matcher(String.valueOf(caracter));
+					if (matcherOperadores.find()) {
+						System.out.println("Operador matemático: "+caracter);
+					} else if (matcherDelimitadores.find()) {
+						System.out.println("Delimitador: "+caracter);
+					}
+				}
 			}
 		}
 		
 	}
 	
-	// DIVIDE EL TEXTO SEGUN LOS ESPACIOS EN BLANCO Y LO DEVUELVE COMO UN ARREGLO
-	public String[] dividirTexto() {
-		String[] texto = ejemploUno.split(" ");
+	public String[] dividirTexto(String entradaUsuario) {
+		String[] texto = entradaUsuario.split(" ");
 		
 		return texto;
 	}
 	
 }
+
