@@ -1,30 +1,48 @@
-    import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.*;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextPane;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.text.*;
+import javax.swing.text.AbstractDocument;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DocumentFilter;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 
 public class Ventana extends JFrame {
-	Escaner escanear;
-	List<PropiedadesCadena> resultados;
-	public Ventana() {
-		escanear = new Escaner();
-		resultados = new ArrayList<>();
-		setVisible(true);
-		setLayout(null);
-		setTitle("Scan");
-		setSize(1100,800);
-		setLocationRelativeTo(null);
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setIconImage(new ImageIcon("src/icon.png").getImage());
-		setResizable(false);
-		
-		panelMenu();
-	}
+	private final Escaner escanear;
+    private List<PropiedadesCadena> resultados;
+
+    public Ventana() {
+        escanear = new Escaner();
+        resultados = new ArrayList<>();
+        configurarVentana();
+        panelMenu();
+    }
+
+    private void configurarVentana() {
+        setVisible(true);
+        setSize(1100, 800);
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setIconImage(new ImageIcon("src/icon.png").getImage());
+        setResizable(false);
+        setTitle("Scan");
+    }
 	
 	public void panelMenu() {
 		JPanel pnlPrincipal = new JPanel();
@@ -131,11 +149,11 @@ public class Ventana extends JFrame {
 				AttributeSet attrs = whiteAttrs;
 
 				if (!resultados.isEmpty()) {
-					for (int i = resultados.size(); i < escanear.iniciarApp(jtaTexto.getText()).size(); i++) {
-						resultados.add(escanear.iniciarApp(jtaTexto.getText()).get(i));
+					for (int i = resultados.size(); i < escanear.analizarCadena(jtaTexto.getText()).size(); i++) {
+						resultados.add(escanear.analizarCadena(jtaTexto.getText()).get(i));
 					}
 				}else {
-					resultados = escanear.iniciarApp(jtaTexto.getText());
+					resultados = escanear.analizarCadena(jtaTexto.getText());
 				}
 
 				for (int i = 0; i < text.length(); i++) {
@@ -143,8 +161,8 @@ public class Ventana extends JFrame {
 
 					if (!resultados.isEmpty()) {
 						for (int z = 0; z < resultados.size(); z++) {
-							if (resultados.get(z).getResultados()[2] == i) {
-								switch (resultados.get(z).getResultados()[0]) {
+							if (resultados.get(z).getTipoPalabra()[2] == i) {
+								switch (resultados.get(z).getTipoPalabra()[0]) {
 									case 1:
 										attrs = orangeAttrs;
 										break;
@@ -167,12 +185,12 @@ public class Ventana extends JFrame {
 
 				if (!resultados.isEmpty()) {
 					for (int i = 0; i < resultados.size(); i++) {
-						if (resultados.get(i).getResultados()[2] == 0) {
-							for (int z = resultados.get(i).getResultados()[1]; z >= 0; z--) {
+						if (resultados.get(i).getTipoPalabra()[2] == 0) {
+							for (int z = resultados.get(i).getTipoPalabra()[1]; z >= 0; z--) {
 								doc.setCharacterAttributes(offset - z, 1, attrs, false);
 							}
 							doc.setCharacterAttributes(offset + 1, 1, whiteAttrs, false);
-							resultados.get(i).getResultados()[2] = 1;
+							resultados.get(i).getTipoPalabra()[2] = 1;
 						}
 					}
 				}
@@ -191,7 +209,7 @@ public class Ventana extends JFrame {
 			}
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				escanear.iniciarApp(jtaTexto.getText());
+				escanear.analizarCadena(jtaTexto.getText());
 			}
 		});
 
@@ -219,189 +237,76 @@ public class Ventana extends JFrame {
 		this.revalidate();
 	}
 
-	public void frameTabla(){
-		JFrame frameTabla = new JFrame();
-		frameTabla.setVisible(true);
-		frameTabla.setTitle("Tabla");
-		frameTabla.setSize(500,800);
-		frameTabla.setLocationRelativeTo(null);
-		frameTabla.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		frameTabla.setIconImage(new ImageIcon("src/icon.png").getImage());
-		frameTabla.setResizable(false);
+	public void frameTabla() {
+        JFrame frameTabla = new JFrame();
+        configurarFrameTabla(frameTabla);
+        panelTabla(frameTabla);
+    }
 
-		panelTabla(frameTabla);
-	}
-	public void panelTabla(JFrame frame) {
-		JPanel pnlPrincipal = new JPanel(new BorderLayout());
-		pnlPrincipal.setBackground(Color.WHITE);
+    private void configurarFrameTabla(JFrame frameTabla) {
+        frameTabla.setVisible(true);
+        frameTabla.setSize(500, 800);
+        frameTabla.setLocationRelativeTo(null);
+        frameTabla.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frameTabla.setIconImage(new ImageIcon("src/icon.png").getImage());
+        frameTabla.setResizable(false);
+        frameTabla.setTitle("Tabla");
+    }
 
-		DefaultTableModel model = new DefaultTableModel();
-		model.addColumn("No.");
-		model.addColumn("Línea");
-		model.addColumn("TOKEN");
-		model.addColumn("Tipo");
-		model.addColumn("Código");
+	private void panelTabla(JFrame frame) {
+    JPanel pnlPrincipal = new JPanel(new BorderLayout());
+    pnlPrincipal.setBackground(Color.WHITE);
 
-		if (!resultados.isEmpty()) {
-			for (int i = 0; i < resultados.size(); i++) {
-				int tipo = 0;
-				int codigo = 0;
-				switch (resultados.get(i).getCadena().toLowerCase()){
-					case "select" :
-						tipo = 1;
-						codigo = 10;
-						break;
-					case "from" :
-						tipo = 1;
-						codigo = 11;
-						break;
-					case "where" :
-						tipo = 1;
-						codigo = 12;
-						break;
-					case "in" :
-						tipo = 1;
-						codigo = 13;
-						break;
-					case "and" :
-						tipo = 1;
-						codigo = 14;
-						break;
-					case "or" :
-						tipo = 1;
-						codigo = 15;
-						break;
-					case "create" :
-						tipo = 1;
-						codigo = 16;
-						break;
-					case "table" :
-						tipo = 1;
-						codigo = 17;
-						break;
-					case "char" :
-						tipo = 1;
-						codigo = 18;
-						break;
-					case "numeric" :
-						tipo = 1;
-						codigo = 19;
-						break;
-					case "not" :
-						tipo = 1;
-						codigo = 20;
-						break;
-					case "null" :
-						tipo = 1;
-						codigo = 21;
-						break;
-					case "constraint" :
-						tipo = 1;
-						codigo = 22;
-						break;
-					case "key" :
-						tipo = 1;
-						codigo = 23;
-						break;
-					case "primary" :
-						tipo = 1;
-						codigo = 24;
-						break;
-					case "foreign" :
-						tipo = 1;
-						codigo = 25;
-						break;
-					case "references" :
-						tipo = 1;
-						codigo = 26;
-						break;
-					case "insert" :
-						tipo = 1;
-						codigo = 27;
-						break;
-					case "into" :
-						tipo = 1;
-						codigo = 28;
-						break;
-					case "values" :
-						tipo = 1;
-						codigo = 29;
-						break;
-					case "," :
-						tipo = 5;
-						codigo = 50;
-						break;
-					case "." :
-						tipo = 5;
-						codigo = 51;
-						break;
-					case "(" :
-						tipo = 5;
-						codigo = 52;
-						break;
-					case ")" :
-						tipo = 5;
-						codigo = 53;
-						break;
-					case "'" :
-						tipo = 5;
-						codigo = 54;
-						break;
-					case "d" :
-						tipo = 6;
-						codigo = 61;
-						break;
-					case "a" :
-						tipo = 6;
-						codigo = 62;
-						break;
-					case "+" :
-						tipo = 7;
-						codigo = 70;
-						break;
-					case "-" :
-						tipo = 7;
-						codigo = 71;
-						break;
-					case "*" :
-						tipo = 7;
-						codigo = 72;
-						break;
-					case "/" :
-						tipo = 7;
-						codigo = 73;
-						break;
-					case ">" :
-						tipo = 8;
-						codigo = 81;
-						break;
-					case "<" :
-						tipo = 8;
-						codigo = 82;
-						break;
-					case "=" :
-						tipo = 8;
-						codigo = 83;
-						break;
-					case ">=" :
-						tipo = 8;
-						codigo = 84;
-						break;
-					case "<=" :
-						tipo = 8;
-						codigo = 85;
-						break;
+    DefaultTableModel model = new DefaultTableModel();
+    model.addColumn("No.");
+    model.addColumn("Línea");
+    model.addColumn("TOKEN");
+    model.addColumn("Tipo");
+    model.addColumn("Código");
 
-				}
-				model.addRow(new Object[]{(i+1), resultados.get(i).getNumLinea(), resultados.get(i).getCadena(), tipo, codigo});
-			}
-		}
+    if (!resultados.isEmpty()) {
+		int tipoIdentificador = 401;
+        for (int i = 0; i < resultados.size(); i++) {
+            PropiedadesCadena propiedades = resultados.get(i);
+            String token = propiedades.getCadena();
+            int tipo = propiedades.getTipoPalabra()[0];
+            int codigo = propiedades.getCodigo();
+            int numLinea = propiedades.getNumLinea();
 
-		JTable table = new JTable(model);
-		table.setEnabled(false);
-		JScrollPane scrollPane = new JScrollPane(table);
+            // Determinar el tipo y código basado en el token
+            switch (tipo) {
+                case 1: // Palabra reservada
+                    model.addRow(new Object[]{i + 1, numLinea, token, "1", codigo});
+                    break;
+                case 2: // Operador
+                    model.addRow(new Object[]{i + 1, numLinea, token, "7", codigo});
+                    break;
+                case 3: // Delimitador
+                    model.addRow(new Object[]{i + 1, numLinea, token, "5", codigo});
+                    break;
+                case 4: // Identificador
+                    model.addRow(new Object[]{i + 1, numLinea, token, tipoIdentificador, null});
+					tipoIdentificador++;
+                    break;
+                case 5: // Constante
+                    model.addRow(new Object[]{i + 1, numLinea, token, "6", codigo});
+                    break;
+                case 6: // Relación
+                    model.addRow(new Object[]{i + 1, numLinea, token, "8", codigo});
+                    break;
+                default:
+                    // Tipo desconocido
+                    break;
+            }
+        }
+    }
 
-		pnlPrincipal.add(scrollPane, BorderLayout.CENTER);
-		frame.add(pnlPrincipal);
-	}
+    JTable table = new JTable(model);
+    table.setEnabled(false);
+    JScrollPane scrollPane = new JScrollPane(table);
+
+    pnlPrincipal.add(scrollPane, BorderLayout.CENTER);
+    frame.add(pnlPrincipal);
+}
+
 }
