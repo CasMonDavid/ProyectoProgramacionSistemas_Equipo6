@@ -1,23 +1,26 @@
 public class PropiedadesCadena {
-    public int[] resultados;
-    public String cadena;
-    public int numLinea;
-    public PropiedadesCadena(){
-        resultados = new int[6];
-        resultados[0] = 0;
-        resultados[1] = 0;
-        resultados[2] = 0;
+    private int[] tipoPalabra;
+    private String cadena;
+    private int numLinea;
+    private int codigo; // Nuevo campo para almacenar el código del token
+
+    public PropiedadesCadena() {
+        tipoPalabra = new int[6];
+        tipoPalabra[0] = 0;
+        tipoPalabra[1] = 0;
+        tipoPalabra[2] = 0;
         cadena = "";
         numLinea = 0;
+        codigo = 0; // Inicializar el código en 0
     }
 
-    public int[] getResultados() {
-        return resultados;
+    public int[] getTipoPalabra() {
+        return tipoPalabra;
     }
 
-    public void setResultados(int resultado1, int resultado2, String cadena) {
-        this.resultados[0] = resultado1;
-        this.resultados[1] = resultado2;
+    public void setTipoPalabra(int resultado1, int resultado2, String cadena) {
+        this.tipoPalabra[0] = resultado1;
+        this.tipoPalabra[1] = resultado2;
         this.cadena = cadena;
     }
 
@@ -32,4 +35,13 @@ public class PropiedadesCadena {
     public void setNumLinea(int numLinea) {
         this.numLinea = numLinea;
     }
+
+    public int getCodigo() { // Getter para el código del token
+        return codigo;
+    }
+
+    public void setCodigo(int codigo) { // Setter para el código del token
+        this.codigo = codigo;
+    }
 }
+
