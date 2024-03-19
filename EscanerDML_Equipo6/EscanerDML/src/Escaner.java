@@ -92,78 +92,88 @@ public class Escaner {
 	
 		for (String linea : lineas) {
 			// Utilizamos una expresión regular para dividir la línea en palabras considerando los espacios alrededor de operadores y delimitadores
-			String[] palabras = linea.split("(?<=[^\\w'])|(?=[^\\w'])");
-			for (String palabra : palabras) {
+			//String[] palabras = linea.split("(?<=[^\\w'])|(?=[^\\w'])");
+			
+			// MODIFICACION: Ahora la forma de buscar coincidencia es por un regex Universal que lo que hace es que cuando encuentra cualquier compatibilidad con sentido en automatico lo
+			// separa y lo manda analizar, pero solo analiza la linea para que siga detectando el donde se encuentra
+			String regexUniversalSQL = "SELECT|INSERT|UPDATE|DELETE|CREATE|DROP|ALTER|FROM|JOIN|WHERE|GROUP BY|ORDER BY|HAVING|AND|OR|NOT|AS|INTO|VALUES|"
+					+ "SET|TABLE|DATABASE|INDEX|FOREIGN KEY|PRIMARY KEY|UNIQUE|CHECK|DEFAULT|NULL|IS|LIKE|\\s+IN\\s+|BETWEEN|EXISTS|ALL|ANY|CASE|"
+					+ "WHEN|THEN|ELSE|END|LIMIT|>|<|=|\\d+|\\w+|'[^']*'|\\*|\\(|\\)|[,.'()]";
+			Pattern pattern = Pattern.compile(regexUniversalSQL, Pattern.CASE_INSENSITIVE);
+			Matcher matcher = pattern.matcher(linea);
+	        // FIN MODIFICACION //
+			
+			// MODIFICACION DAVID: ahora es un ciclo while que buscara coincidencias
+			while (matcher.find()) {
 				PropiedadesCadena propiedadesCadena = new PropiedadesCadena();
 				propiedadesCadena.setNumLinea(numLinea);
-
+				
+				String token = matcher.group(); // MODIFICACION DAVID: ahora segun el regex universal agarra una coincidencia para su revision
+				
 				// Identificar el tipo de token y asignar el código correspondiente
-				int codigo = asignarCodigo(palabra);
+				int codigo = asignarCodigo(token);
 				propiedadesCadena.setCodigo(codigo); // Establecer el código del token en la instancia de PropiedadesCadena
-	
-				Matcher matcherReservadas = regexReservadas.matcher(palabra);
-				Matcher matcherConstantes = regexConstantes.matcher(palabra);
-				Matcher matcherIdentificadores = regexIdentificadores.matcher(palabra);
-				Matcher matcherRelacionales = regexRelaciones.matcher(palabra);
-	
-				if (matcherReservadas.matches()) {
-					propiedadesCadena.setTipoPalabra(1, palabra.length(), palabra);
+				
+				// Manda a llamar una funcion para que le regrese el tipo de token que esta ejecutandose y segun sea el caso registra los datos
+				switch (identificarTipoToken(token)) {
+				case "Reservada":
+					propiedadesCadena.setTipoPalabra(1, token.length(), token);
 					arrayResultados.add(propiedadesCadena);
-				} else if (matcherIdentificadores.matches()) {
+					break;
+				case "Identificador":
 					PropiedadesCadena identificador = new PropiedadesCadena();
-					identificador.setTipoPalabra(4, palabra.length(), palabra);
+					identificador.setTipoPalabra(4, token.length(), token);
 					identificador.setNumLinea(numLinea);
 					arrayResultados.add(identificador);
-				} else if (matcherConstantes.matches()) {
+					break;
+				case "Constante":
 					PropiedadesCadena constante = new PropiedadesCadena();
-					constante.setTipoPalabra(5, palabra.length(), palabra);
+					constante.setTipoPalabra(5, token.length(), token);
 					constante.setNumLinea(numLinea);
 					arrayResultados.add(constante);
-				} else if (matcherRelacionales.matches()) {
-					// Verificar si el operador relacional es parte de un operador compuesto
-					String operadorRelacional = matcherRelacionales.group();
-					if (palabra.length() > operadorRelacional.length()) {
-						// Operador relacional compuesto encontrado
-						PropiedadesCadena relacion = new PropiedadesCadena();
-						relacion.setTipoPalabra(6, operadorRelacional.length(), operadorRelacional);
-						relacion.setNumLinea(numLinea);
-						arrayResultados.add(relacion);
-	
-						// Agregar el resto de la palabra como otro token
-						String restoPalabra = palabra.substring(operadorRelacional.length());
-						if (!restoPalabra.isEmpty()) {
-							PropiedadesCadena resto = new PropiedadesCadena();
-							resto.setTipoPalabra(4, restoPalabra.length(), restoPalabra);
-							resto.setNumLinea(numLinea);
-							arrayResultados.add(resto);
-						}
-					} else {
-						// Operador relacional individual encontrado
-						propiedadesCadena.setTipoPalabra(6, palabra.length(), palabra);
-						arrayResultados.add(propiedadesCadena);
-					}
-				} else {
-					// Identificar operadores y delimitadores
-					for (char caracter : palabra.toCharArray()) {
-						String caracterString = String.valueOf(caracter);
-						if (regexOperadores.matcher(caracterString).matches()) {
-							propiedadesCadena.setTipoPalabra(2, palabra.length(), palabra);
-							arrayResultados.add(propiedadesCadena);
-						} else if (regexDelimitadores.matcher(caracterString).matches()) {
-							propiedadesCadena.setTipoPalabra(3, palabra.length(), palabra);
-							arrayResultados.add(propiedadesCadena);
-						}
-					}
+					break;
+				case "Operador":
+					// PropiedadesCadena relacion = new PropiedadesCadena();
+					propiedadesCadena.setTipoPalabra(2, token.length(), token);
+					propiedadesCadena.setNumLinea(numLinea);
+					arrayResultados.add(propiedadesCadena);
+					break;
+				case "Delimitador":
+					// PropiedadesCadena Delimitador = new PropiedadesCadena();
+					propiedadesCadena.setTipoPalabra(3, token.length(), token);
+					propiedadesCadena.setNumLinea(numLinea);
+					arrayResultados.add(propiedadesCadena);
+					break;
+				case "Desconocido":
+					System.out.println("Error de sintaxis: " + token);
+					break;
+				default:break;
 				}
-	
-				if (arrayResultados.isEmpty()) {
-					System.out.println("Error de sintaxis: " + palabra);
-				}
-			}
+			}	
 			numLinea++;
 		}
 		return arrayResultados;
 	}
+    
+    // IDENTIFICA QUE TIPO DE TOKEN ES Y REGRESA EL TIPO EN CADENA
+    public String identificarTipoToken(String token) {
+        if (token.matches("\\s?(SELECT|INSERT|UPDATE|DELETE|CREATE|DROP|ALTER|FROM|JOIN|WHERE|GROUP BY|ORDER BY|HAVING|AND|OR|NOT|AS|INTO|VALUES|\"\r\n"
+        		+ "SET|TABLE|DATABASE|INDEX|FOREIGN KEY|PRIMARY KEY|UNIQUE|CHECK|DEFAULT|NULL|IS|LIKE|IN|BETWEEN|EXISTS|ALL|ANY|CASE|\"\r\n"
+        		+ "WHEN|THEN|ELSE|END|LIMIT)\\s?")) {
+            return "Reservada";
+        } else if (token.matches("[a-zA-Z_][a-zA-Z_0-9]*")) {
+            return "Identificador";
+        } else if (token.matches("'[^']*'|\\b\\w+\\b|[0-9]+")) {
+            return "Constante";
+        } else if (token.matches(">|<|=|\\*")) {
+            return "Operador";
+        } else if (token.matches("[,.'()]")) {
+            return "Delimitador";
+        } else {
+            return "Desconocido";
+        }
+    }
+    
 	// Método para asignar códigos únicos a cada tipo de token
     private int asignarCodigo(String token) {
         if (codigosReservadas.containsKey(token)) {
