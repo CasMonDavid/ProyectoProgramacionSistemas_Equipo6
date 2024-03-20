@@ -1,9 +1,11 @@
-import java.util.ArrayList;
+    import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import javax.swing.JOptionPane;
 
 public class Escaner {
 
@@ -98,7 +100,7 @@ public class Escaner {
 			// separa y lo manda analizar, pero solo analiza la linea para que siga detectando el donde se encuentra
 			String regexUniversalSQL = "SELECT|INSERT|UPDATE|DELETE|CREATE|DROP|ALTER|FROM|JOIN|WHERE|GROUP BY|ORDER BY|HAVING|AND|OR|NOT|AS|INTO|VALUES|"
 					+ "SET|TABLE|DATABASE|INDEX|FOREIGN KEY|PRIMARY KEY|UNIQUE|CHECK|DEFAULT|NULL|IS|LIKE|\\s+IN\\s+|BETWEEN|EXISTS|ALL|ANY|CASE|"
-					+ "WHEN|THEN|ELSE|END|LIMIT|>|<|=|\\d+|\\w+|'[^']*'|\\*|\\(|\\)|[,.'()]";
+					+ "WHEN|THEN|ELSE|END|LIMIT|<=|>=|>|<|=|\\d+|\\w+[#]?|'[^']*'|\\*|\\(|\\)|[,.'()]|\\s?(?=.+[^a-zA-Z0-9])[a-zA-Z0-9!'#\\$%&\\/]{3,}\\s?";
 			Pattern pattern = Pattern.compile(regexUniversalSQL, Pattern.CASE_INSENSITIVE);
 			Matcher matcher = pattern.matcher(linea);
 	        // FIN MODIFICACION //
@@ -145,11 +147,13 @@ public class Escaner {
 					arrayResultados.add(propiedadesCadena);
 					break;
 				case "Desconocido":
-					System.out.println("Error de sintaxis: " + token);
+					JOptionPane.showMessageDialog(null, "Error de sintaxis en la linea " + numLinea + ": " + token, "Error de sintaxis", JOptionPane.ERROR_MESSAGE);
+					System.out.println("Error de sintaxis en la linea " + numLinea + ": " + token);
 					break;
 				default:break;
 				}
-			}	
+				//System.out.println("Token: "+token);
+			}
 			numLinea++;
 		}
 		return arrayResultados;
@@ -161,11 +165,11 @@ public class Escaner {
         		+ "SET|TABLE|DATABASE|INDEX|FOREIGN KEY|PRIMARY KEY|UNIQUE|CHECK|DEFAULT|NULL|IS|LIKE|IN|BETWEEN|EXISTS|ALL|ANY|CASE|\"\r\n"
         		+ "WHEN|THEN|ELSE|END|LIMIT)\\s?")) {
             return "Reservada";
-        } else if (token.matches("[a-zA-Z_][a-zA-Z_0-9]*")) {
+        } else if (token.matches("\\s?[a-zA-Z_][a-zA-Z_0-9-_#]*\\s?")) {
             return "Identificador";
-        } else if (token.matches("'[^']*'|\\b\\w+\\b|[0-9]+")) {
+        } else if (token.matches("\\s?'[^']*'|\\b\\w+\\b|[0-9]+\\s?")) {
             return "Constante";
-        } else if (token.matches(">|<|=|\\*")) {
+        } else if (token.matches(">|<|=|<=|>=|\\*")) {
             return "Operador";
         } else if (token.matches("[,.'()]")) {
             return "Delimitador";
@@ -192,3 +196,5 @@ public class Escaner {
         }
     }
 }
+
+    

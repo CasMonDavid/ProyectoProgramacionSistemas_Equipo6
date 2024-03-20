@@ -4,6 +4,8 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +28,7 @@ import javax.swing.text.StyledDocument;
 public class Ventana extends JFrame {
 	private final Escaner escanear;
     private List<PropiedadesCadena> resultados;
+	JTextPane jtaTexto;
 
     public Ventana() {
         escanear = new Escaner();
@@ -99,7 +102,7 @@ public class Ventana extends JFrame {
 		pnlPrincipal.add(jlTabla);
 		pnlPrincipal.add(jlTablaFondo);
 
-		JTextPane jtaTexto = new JTextPane();
+		jtaTexto = new JTextPane();
 		jtaTexto.setBounds(85, 45, 1080, 780);
 		jtaTexto.setBackground(null);
 		jtaTexto.setForeground(new Color(215,215,215));
@@ -225,6 +228,10 @@ public class Ventana extends JFrame {
 			}
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				resultados = escanear.analizarCadena(jtaTexto.getText());
+				for (int i = resultados.size(); i < escanear.analizarCadena(jtaTexto.getText()).size(); i++) {
+					resultados.add(escanear.analizarCadena(jtaTexto.getText()).get(i));
+				}
 				frameTabla();
 			}
 		});
@@ -265,7 +272,8 @@ public class Ventana extends JFrame {
     model.addColumn("Código");
 
     if (!resultados.isEmpty()) {
-		int tipoIdentificador = 401;
+		int valorIdentificador = 401;
+		int valorConstante = 600;
         for (int i = 0; i < resultados.size(); i++) {
             PropiedadesCadena propiedades = resultados.get(i);
             String token = propiedades.getCadena();
@@ -285,11 +293,12 @@ public class Ventana extends JFrame {
                     model.addRow(new Object[]{i + 1, numLinea, token, "5", codigo});
                     break;
                 case 4: // Identificador
-                    model.addRow(new Object[]{i + 1, numLinea, token, tipoIdentificador, null});
-					tipoIdentificador++;
+                    model.addRow(new Object[]{i + 1, numLinea, token, "4", valorIdentificador});
+					valorIdentificador++;
                     break;
                 case 5: // Constante
-                    model.addRow(new Object[]{i + 1, numLinea, token, "6", codigo});
+                    model.addRow(new Object[]{i + 1, numLinea, token, "6", valorConstante});
+					valorConstante++;
                     break;
                 case 6: // Relación
                     model.addRow(new Object[]{i + 1, numLinea, token, "8", codigo});
@@ -301,6 +310,20 @@ public class Ventana extends JFrame {
         }
     }
 
+	frame.addWindowListener(new WindowAdapter() {
+		@Override
+		public void windowClosing(WindowEvent e) {
+			int rowCount = model.getRowCount();
+			while (rowCount > 0) {
+				model.removeRow(0);
+				rowCount = model.getRowCount();
+				if (!resultados.isEmpty()) {
+					resultados = new ArrayList<>();
+				}
+			}
+		}
+	});
+
     JTable table = new JTable(model);
     table.setEnabled(false);
     JScrollPane scrollPane = new JScrollPane(table);
@@ -310,3 +333,5 @@ public class Ventana extends JFrame {
 }
 
 }
+
+    
