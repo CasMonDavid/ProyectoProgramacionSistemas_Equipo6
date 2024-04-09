@@ -1,10 +1,9 @@
-    import java.util.ArrayList;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import javax.swing.JOptionPane;
 
 public class Escaner {
@@ -16,6 +15,7 @@ public class Escaner {
     private final Pattern regexIdentificadores;
     private final Pattern regexConstantes;
     private final Pattern regexRelaciones;
+    private List<PropiedadesCadena> sintaxisResultado = new ArrayList<>();
 
 	// Definir códigos únicos para cada tipo de token
     private final Map<String, Integer> codigosReservadas = new HashMap<>();
@@ -156,6 +156,7 @@ public class Escaner {
 			}
 			numLinea++;
 		}
+		setSintaxisResultado(arrayResultados);
 		return arrayResultados;
 	}
     
@@ -195,6 +196,15 @@ public class Escaner {
             return 0; // O el valor que prefieras
         }
     }
+
+    // OBTENER LA LISTA DE SINTAXIS
+	public List<PropiedadesCadena> getSintaxisResultado() {
+		return sintaxisResultado;
+	}
+
+	public void setSintaxisResultado(List<PropiedadesCadena> sintaxisResultado) {
+		this.sintaxisResultado = sintaxisResultado;
+	}
 }
 
     

@@ -24,14 +24,17 @@ import javax.swing.text.DocumentFilter;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
+import javax.swing.text.html.HTMLEditorKit.Parser;
 
 public class Ventana extends JFrame {
 	private final Escaner escanear;
+	private final ParserProcesador parser;
     private List<PropiedadesCadena> resultados;
 	JTextPane jtaTexto;
 
     public Ventana() {
         escanear = new Escaner();
+        parser = new ParserProcesador();
         resultados = new ArrayList<>();
         configurarVentana();
         panelMenu();
@@ -232,6 +235,12 @@ public class Ventana extends JFrame {
 				for (int i = resultados.size(); i < escanear.analizarCadena(jtaTexto.getText()).size(); i++) {
 					resultados.add(escanear.analizarCadena(jtaTexto.getText()).get(i));
 				}
+				
+				// SE LE PASAN LOS DATOS DE RESULTADO AL PARSER PARA SU PROCESO
+				parser.setlistaLexica(resultados);  
+				//parser.pruebas();
+				parser.procesarSintaxis();
+				
 				frameTabla();
 			}
 		});
