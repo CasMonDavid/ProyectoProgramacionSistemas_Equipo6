@@ -239,7 +239,7 @@ public class Ventana extends JFrame {
 				// SE LE PASAN LOS DATOS DE RESULTADO AL PARSER PARA SU PROCESO
 				parser.setlistaLexica(resultados);  
 				//parser.pruebas();
-				parser.procesarSintaxis();
+				//parser.procesarSintaxis();
 				
 				frameTabla();
 			}
