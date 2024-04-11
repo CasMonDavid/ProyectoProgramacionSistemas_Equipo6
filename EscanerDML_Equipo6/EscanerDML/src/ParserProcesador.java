@@ -73,16 +73,22 @@ public class ParserProcesador {
 		// ESTE ES EL CICLO QUE SE VE EN EL VIDEO, EL CICLO SE MANTENDRA HASTA QUE LLEGEMOS AL FINAL DE LA VARIABLE "Pila"
 		do { System.out.println("");
 			varX = pilaReglas.pop();
-			varK = devolverValorTerminal(pilaLexica.get(apuntador));
+			if (apuntador>0 && apuntador<pilaLexica.size()-1) {
+				varK = devolverValorTerminal(pilaLexica.get(apuntador), pilaLexica.get(apuntador+1), pilaLexica.get(apuntador-1));
+			}else {
+				varK = devolverValorTerminal(pilaLexica.get(apuntador), "-1", "-1");
+			}
 			System.out.println("varX: "+varX+", varK: "+varK+", Apuntador: "+apuntador+", pilaLexica: "+pilaLexica.get(apuntador));
 			
-			if (esTerminal(varX) || varX.equals("$")) {
-				if (varX.equals(varK)) {
+			if (esTerminal(varX) || varX.equals("199")) {
+				if (varX.equals(varK) || (varX.equals("199") && varK.equals("$"))) {
 					apuntador++; // AVANZAR AL SIGUIENTE ELEMENTO
+					//
 					System.out.println("Apuntador avanza");
 				}else {
 					error();//LA FUNCION ERROR NO HACE NADA, LA CREE SOLO PARA QUE VEAN DONDE DEBE DE TRONAR SI HAY ERRORES PARA QUE LA LLENEN DESPUES.
 					System.out.println("Error 1, "+"varX: "+varX+", varK: "+varK+", Apuntador: "+apuntador);
+					contarReglas(pilaReglas);
 					break;
 				}
 			}else {
@@ -97,17 +103,26 @@ public class ParserProcesador {
 				}else {
 					error();//LA FUNCION ERROR NO HACE NADA, LA CREE SOLO PARA QUE VEAN DONDE DEBE DE TRONAR SI HAY ERRORES PARA QUE LA LLENEN DESPUES.
 					System.out.println("Error 2, "+"varX: "+varX+", varK: "+varK+", Apuntador: "+apuntador);
+					contarReglas(pilaReglas);
 					break;
 				}
 			}
-			
-		} while (!varX.equals("$"));
+			System.out.println("");
+			contarReglas(pilaReglas);
+			System.out.println("");
+		} while (!varX.equals("199"));
 		
-		if (varX.equals(varK)) {
+		if (varX.equals("199") && varK.equals("$")) {
 			System.out.println("LA SINTACTICA ES CORRECTA");
 		}
-		
 		return resultado;
+	}
+	
+	public void contarReglas(Stack<String> pilaReglas) {
+		Object[] arreglo = pilaReglas.toArray();
+		for (int i=0;i<arreglo.length;i++) {
+			System.out.print(arreglo[i]+"->");
+		}
 	}
 	
 	// DEBERIA REGRESAR EL CONJUNTO DE REGLAS EN DADO CASO QUE LAS CONTENGA
@@ -152,7 +167,7 @@ public class ParserProcesador {
 	}
 	
 	// DA EL DATO QUE ESTA ANALIZANDO Y DEBE REGRESAR SU VALOR DE LA TABLA DE SIMBOLOS
-	public String devolverValorTerminal(String elemento) {
+	public String devolverValorTerminal(String elemento, String pilaMasUno, String pilaMenosUno) {
 		String resultado = "-1";
 		
 		switch (elemento) {
@@ -168,6 +183,9 @@ public class ParserProcesador {
 		case "IN":
 			resultado = "13";
 			break;
+		case "AND":
+		case "AND ":
+		case " AND":
 		case " AND ":// POR ALGUNA RAZON DESCONOCIDA EN ALGUN PUNTO AGARRA DOS ESPACIOS A LOS LADOS SOLO LA PALABRA RESRVADA "AND"
 			resultado = "14";
 			break;
@@ -271,18 +289,18 @@ public class ParserProcesador {
 		}
 		
 		if (resultado=="-1") {
-			if (elemento.matches("\\s?[a-zA-Z_][a-zA-Z_0-9-_#]*\\s?")) {
+			if (elemento.matches("\\s?[a-zA-Z_][a-zA-Z_0-9-_#]*\\s?") && !pilaMasUno.equals("'") && !pilaMenosUno.equals("'")) {
 				// IDENTIFICADORES
 				resultado = "400";
 				System.out.println("Elemento: "+elemento+" entro como IDENTIFICADOR");
-			} else if (elemento.matches("[']\\w+[']")) {
-				// CONSTANTE ALFANUMERICO
-				resultado = "602";
-				System.out.println("Elemento: "+elemento+" entro como CONSTANTE ALFANUMERICO");
-			}else if (elemento.matches("[0-9]+")) {
+			} else if (elemento.matches("[0-9]+") && !pilaMasUno.equals("'") && !pilaMenosUno.equals("'")) {
 				// CONSTANTE NUMERICO
 				resultado = "601";
 				System.out.println("Elemento: "+elemento+" entro como CONSTANTE NUMERICO");
+			}else if (elemento.matches("\\w+")) {
+				// CONSTANTE ALFANUMERICO
+				resultado = "602";
+				System.out.println("Elemento: "+elemento+" entro como CONSTANTE ALFANUMERICO");
 			}
 		}
 		
@@ -326,7 +344,11 @@ public class ParserProcesador {
 
 	//Tabla sintactica 4 = 400
 	public String tablaSintactica(String varX, String varY) {
-
+		
+		if (varY.equals("$")) {
+			varY= "199";
+		}
+		
 		if (varX.equals("300") && varY.equals("10")) {
 			return "10 301 11 306 310";
 		} else if (varX.equals("301") && varY.equals("400")) {

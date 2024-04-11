@@ -99,8 +99,8 @@ public class Escaner {
 			// MODIFICACION: Ahora la forma de buscar coincidencia es por un regex Universal que lo que hace es que cuando encuentra cualquier compatibilidad con sentido en automatico lo
 			// separa y lo manda analizar, pero solo analiza la linea para que siga detectando el donde se encuentra
 			String regexUniversalSQL = "SELECT|INSERT|UPDATE|DELETE|CREATE|DROP|ALTER|FROM|JOIN|WHERE|GROUP BY|ORDER BY|HAVING|AND|OR|NOT|AS|INTO|VALUES|"
-					+ "SET|TABLE|DATABASE|INDEX|FOREIGN KEY|PRIMARY KEY|UNIQUE|CHECK|DEFAULT|NULL|IS|LIKE|\\s+IN\\s+|BETWEEN|EXISTS|ALL|ANY|CASE|"
-					+ "WHEN|THEN|ELSE|END|LIMIT|<=|>=|>|<|=|\\d+|\\w+[#]?|'[^']*'|\\*|\\(|\\)|[,.'()]|\\s?(?=.+[^a-zA-Z0-9])[a-zA-Z0-9!'#\\$%&\\/]{3,}\\s?";
+					+ "SET|TABLE|DATABASE|INDEX|FOREIGN KEY|PRIMARY KEY|UNIQUE|CHECK|DEFAULT|NULL|//s+IS//s+|LIKE|\\s+IN\\s+|BETWEEN|EXISTS|ALL|ANY|CASE|"
+					+ "WHEN|THEN|ELSE|END|LIMIT|<=|>=|>|<|=|'|\\b[a-zA-Z0-9]+[#]?|\\*|\\(|\\)|[,.'()]|\\s?(?=.+[^a-zA-Z0-9])[a-zA-Z0-9!'#\\$%&\\/]{3,}\\s?";
 			Pattern pattern = Pattern.compile(regexUniversalSQL, Pattern.CASE_INSENSITIVE);
 			Matcher matcher = pattern.matcher(linea);
 	        // FIN MODIFICACION //
