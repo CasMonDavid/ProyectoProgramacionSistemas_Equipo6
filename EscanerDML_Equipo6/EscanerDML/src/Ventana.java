@@ -12,6 +12,7 @@ import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -31,6 +32,7 @@ public class Ventana extends JFrame {
 	private final ParserProcesador parser;
     private List<PropiedadesCadena> resultados;
 	JTextPane jtaTexto;
+	private Errores excepcion;
 
     public Ventana() {
         escanear = new Escaner();
@@ -215,7 +217,24 @@ public class Ventana extends JFrame {
 			}
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				escanear.analizarCadena(jtaTexto.getText());
+				resultados = escanear.analizarCadena(jtaTexto.getText());
+				for (int i = resultados.size(); i < escanear.analizarCadena(jtaTexto.getText()).size(); i++) {
+					resultados.add(escanear.analizarCadena(jtaTexto.getText()).get(i));
+				}
+				
+				// SE LE PASAN LOS DATOS DE RESULTADO AL PARSER PARA SU PROCESO
+				parser.setlistaLexica(resultados);  
+				parser.pruebas();
+				
+				
+				if (escanear.isLexicoCorrecto()) {
+					if (parser.procesarSintaxis()) {
+						JOptionPane.showMessageDialog(null, "¡¡La sentencia es correcta!!", "Exito", JOptionPane.INFORMATION_MESSAGE);
+					}else {
+						excepcion = parser.getExcepcion();
+						JOptionPane.showMessageDialog(null, excepcion.devolverMensajeError(), "Fracaso...", JOptionPane.ERROR_MESSAGE);
+					}
+				}
 			}
 		});
 

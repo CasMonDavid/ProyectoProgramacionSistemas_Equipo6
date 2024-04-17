@@ -16,6 +16,7 @@ public class Escaner {
     private final Pattern regexConstantes;
     private final Pattern regexRelaciones;
     private List<PropiedadesCadena> sintaxisResultado = new ArrayList<>();
+    public boolean lexicoCorrecto;
 
 	// Definir códigos únicos para cada tipo de token
     private final Map<String, Integer> codigosReservadas = new HashMap<>();
@@ -80,6 +81,8 @@ public class Escaner {
         codigosRelacionales.put("=", 83);
         codigosRelacionales.put(">=", 84);
         codigosRelacionales.put("<=", 85);
+        
+        lexicoCorrecto=true;
 	}
 	
 
@@ -91,6 +94,7 @@ public class Escaner {
 		List<PropiedadesCadena> arrayResultados = new ArrayList<>();
 		String[] lineas = entradaUsuario.split("\\r?\\n");
 		int numLinea = 1;
+		lexicoCorrecto=true;
 	
 		for (String linea : lineas) {
 			// Utilizamos una expresión regular para dividir la línea en palabras considerando los espacios alrededor de operadores y delimitadores
@@ -147,7 +151,8 @@ public class Escaner {
 					arrayResultados.add(propiedadesCadena);
 					break;
 				case "Desconocido":
-					JOptionPane.showMessageDialog(null, "Error de sintaxis en la linea " + numLinea + ": " + token, "Error de sintaxis", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Error tipo 1:101 Linea "+numLinea+". Simbolo desconocido.", "Fracaso...", JOptionPane.ERROR_MESSAGE);
+					lexicoCorrecto=false;
 					System.out.println("Error de sintaxis en la linea " + numLinea + ": " + token);
 					break;
 				default:break;
@@ -196,7 +201,8 @@ public class Escaner {
             return 0; // O el valor que prefieras
         }
     }
-
+    
+    //GETTERS AND SETTERS
     // OBTENER LA LISTA DE SINTAXIS
 	public List<PropiedadesCadena> getSintaxisResultado() {
 		return sintaxisResultado;
@@ -205,6 +211,14 @@ public class Escaner {
 	public void setSintaxisResultado(List<PropiedadesCadena> sintaxisResultado) {
 		this.sintaxisResultado = sintaxisResultado;
 	}
+	//
+	public boolean isLexicoCorrecto() {
+		return lexicoCorrecto;
+	}
+	public void setLexicoCorrecto(boolean lexicoCorrecto) {
+		this.lexicoCorrecto = lexicoCorrecto;
+	}
+	//
 }
 
     

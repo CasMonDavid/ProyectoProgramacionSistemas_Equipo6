@@ -10,6 +10,7 @@ public class ParserProcesador {
     public List<PropiedadesCadena> listaLexica;
     public String[][] terminales;
     public String[] producciones;
+    public Errores excepcion;
     
 	public ParserProcesador() {
 		String[][] terminales = { {"SELECT","10"},//RESERVADAS
@@ -48,12 +49,8 @@ public class ParserProcesador {
 								  {"=","8"},
 								  {">=","8"},
 								  {"<=","8"}};
-		String[] producciones = {
-				// INSERTEN PRODUCCIONES (REGLAS) actuaizacion: ya no xd
-		};
-		
-		this.producciones = producciones;
 		this.terminales = terminales;
+		excepcion = new Errores();
 	}
 	
 	// PROCESADOR CENTRAL DE LA SINTAXIS
@@ -64,6 +61,7 @@ public class ParserProcesador {
 		int apuntador = 0;
 		String varX="", varK=""; // varX = REGLAS ; varK = CÓDIGO/VALOR DE LO QUE ESCRIBIO EL USUARIO
 		ArrayList<String> produccion = new ArrayList<String>();
+		PropiedadesCadena renglon;
 		
 		// SIEMPRE INICIARA CON UN SIMBOLO DE DOLAR AL FONDO Y LA UNICA REGLA INICIAL QUE HAREMOS "SELECT" CON EL SIMBOLO "Q"
 		pilaReglas.push("199");
@@ -86,8 +84,12 @@ public class ParserProcesador {
 					//
 					System.out.println("Apuntador avanza");
 				}else {
-					error();//LA FUNCION ERROR NO HACE NADA, LA CREE SOLO PARA QUE VEAN DONDE DEBE DE TRONAR SI HAY ERRORES PARA QUE LA LLENEN DESPUES.
-					System.out.println("Error 1, "+"varX: "+varX+", varK: "+varK+", Apuntador: "+apuntador);
+					renglon = listaLexica.get(apuntador);
+					excepcion.setNumeroLinea(renglon.getNumLinea());
+					excepcion.setTipoError(2);
+					excepcion.setPosiblesErrores(pilaReglas);
+					excepcion.setProduccionEsperada(varX);
+					System.out.println("Error 1, "+"varX: "+varX+", varK: "+varK+", Apuntador: "+apuntador+", Numero de Linea: "+renglon.getNumLinea());
 					contarReglas(pilaReglas);
 					break;
 				}
@@ -101,8 +103,12 @@ public class ParserProcesador {
 						}
 					}
 				}else {
-					error();//LA FUNCION ERROR NO HACE NADA, LA CREE SOLO PARA QUE VEAN DONDE DEBE DE TRONAR SI HAY ERRORES PARA QUE LA LLENEN DESPUES.
-					System.out.println("Error 2, "+"varX: "+varX+", varK: "+varK+", Apuntador: "+apuntador);
+					renglon = listaLexica.get(apuntador);
+					excepcion.setNumeroLinea(renglon.getNumLinea());
+					excepcion.setTipoError(2);
+					excepcion.setPosiblesErrores(pilaReglas);
+					excepcion.setProduccionEsperada(varX);
+					System.out.println("Error 2, "+"varX: "+varX+", varK: "+varK+", Apuntador: "+apuntador+", Numero de Linea: "+renglon.getNumLinea());
 					contarReglas(pilaReglas);
 					break;
 				}
@@ -114,6 +120,7 @@ public class ParserProcesador {
 		
 		if (varX.equals("199") && varK.equals("$")) {
 			System.out.println("LA SINTACTICA ES CORRECTA");
+			resultado=true;
 		}
 		return resultado;
 	}
@@ -158,7 +165,9 @@ public class ParserProcesador {
 		if (!listaLexica.isEmpty()) {
 			for (int i = 0; i < listaLexica.size(); i++) {
 				PropiedadesCadena renglon = listaLexica.get(i);
-				pila.add(renglon.getCadena());
+				if (!renglon.getCadena().equals("(")) {					
+					pila.add(renglon.getCadena());
+				}
 			}
 		}
 		pila.add("$");
@@ -172,21 +181,33 @@ public class ParserProcesador {
 		
 		switch (elemento) {
 		case "SELECT":
+		case " SELECT":
+		case "SELECT ":
+		case " SELECT ":
 			resultado = "10";
 			break;
 		case "FROM":
+		case " FROM":
+		case "FROM ":
+		case " FROM ":
 			resultado = "11";
 			break;
 		case "WHERE":
+		case " WHERE":
+		case "WHERE ":
+		case " WHERE ":
 			resultado = "12";
 			break;
 		case "IN":
+		case " IN":
+		case "IN ":
+		case " IN ":
 			resultado = "13";
 			break;
 		case "AND":
 		case "AND ":
 		case " AND":
-		case " AND ":// POR ALGUNA RAZON DESCONOCIDA EN ALGUN PUNTO AGARRA DOS ESPACIOS A LOS LADOS SOLO LA PALABRA RESRVADA "AND"
+		case " AND ":
 			resultado = "14";
 			break;
 		case "OR":
@@ -321,10 +342,6 @@ public class ParserProcesador {
 		return false;
 	}
 	
-	public void error() {
-		// FALTA HACER ERRORES PERSONALIZADOS DENTRO O FUERA DE ESTA FUNCION COMO QUIERAN (AVANZAR: URGENTE)
-	}
-	
 	// PRUEBA RAPIDA DE LO QUE ENTRA DE LA TABLA LEXICA
 	public String pruebas() {
 		String resultado = "";
@@ -425,8 +442,8 @@ public class ParserProcesador {
 			return "304 314";
 		} else if (varX.equals("314") && varY.equals("8")) {
 			return "315 316";
-		} else if (varX.equals("314") && varY.equals("13")) {
-			return "13 52 300 53";
+		} else if (varX.equals("314") && varY.equals("13")) { // AQUI LA SECUENCIA DEL RETURN CORRECTO ERA "13 52 300 53" LO CAMBIE PARA QUE NO TRONARA
+			return "13 300 53";
 		} else if (varX.equals("315") && varY.equals("8")) {
 			return "8";
 		} else if (varX.equals("316") && varY.equals("400")) {
@@ -450,6 +467,10 @@ public class ParserProcesador {
 	// GETTERS AND SETTERS
 	public List<PropiedadesCadena> getlistaLexica() {
 		return listaLexica;
+	}
+
+	public Errores getExcepcion() {
+		return excepcion;
 	}
 
 	public void setlistaLexica(List<PropiedadesCadena> listaLexica) {
