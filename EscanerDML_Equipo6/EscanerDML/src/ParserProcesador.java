@@ -268,6 +268,9 @@ public class ParserProcesador {
 			resultado = "53";
 			break;
 		case "'":
+		case " '":
+		case "' ":
+		case " ' ":
 			resultado = "54";
 			break;
 		case "d": // CONSTANTES, NO SE USAN ESTOS EN NUESTRO CÓDIGO
