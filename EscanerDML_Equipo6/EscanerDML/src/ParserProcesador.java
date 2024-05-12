@@ -1,4 +1,4 @@
-    import java.lang.reflect.Array;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
@@ -65,7 +65,13 @@ public class ParserProcesador {
 		
 		// SIEMPRE INICIARA CON UN SIMBOLO DE DOLAR AL FONDO Y LA UNICA REGLA INICIAL QUE HAREMOS "SELECT" CON EL SIMBOLO "Q"
 		pilaReglas.push("199");
-		pilaReglas.push("300");
+        if (pilaLexica.get(0).equals("SELECT")) {
+            pilaReglas.push("300");
+            System.out.println("Es select");
+        }else {
+            pilaReglas.push("200");
+            System.out.println("Es create");
+        }
 		//
 		
 		// ESTE ES EL CICLO QUE SE VE EN EL VIDEO, EL CICLO SE MANTENDRA HASTA QUE LLEGEMOS AL FINAL DE LA VARIABLE "Pila"
@@ -369,6 +375,8 @@ public class ParserProcesador {
 			varY= "199";
 		}
 		
+		
+		
 		if (varX.equals("300") && varY.equals("10")) {
 			return "10 301 11 306 310";
 		} else if (varX.equals("301") && varY.equals("400")) {
@@ -463,7 +471,70 @@ public class ParserProcesador {
 			return "602";
 		} else if (varX.equals("319") && varY.equals("601")) {
 			return "601";
+		} else if (varX.equals("200") && varY.equals("16")) {
+            return "16 17 4 52 202 53 55 201";
+        } else if (varX.equals("201") && varY.equals("16")) {
+            return "200";
+        } else if (varX.equals("201") && varY.equals("27")) {
+            return "211";
+        } else if (varX.equals("201") && varY.equals("199")) {
+            return "99";
+        } else if (varX.equals("202") && varY.equals("4")) {
+            return "4 203 52 61 53 204 205";
+        } else if (varX.equals("203") && varY.equals("18")) {
+            return "18";
+        } else if (varX.equals("203") && varY.equals("19")) {
+            return "19";
+        } else if (varX.equals("204") && varY.equals("20")) {
+            return "20 21";
+        } else if (varX.equals("204") && varY.equals("50")) {
+            return "99";
+        } else if (varX.equals("205") && varY.equals("50")) {
+            return "50 206";
+        } else if (varX.equals("205") && varY.equals("53")) {
+            return "99";
+        } else if (varX.equals("206") && varY.equals("4")) {
+            return "202";
+        } else if (varX.equals("206") && varY.equals("22")) {
+            return "207";
+        } else if (varX.equals("207") && varY.equals("22")) {
+            return "22 4 208 52 4 53 209";
+        } else if (varX.equals("208") && varY.equals("24")) {
+            return "24 23";
+        } else if (varX.equals("208") && varY.equals("25")) {
+            return "25 23";
+        } else if (varX.equals("209") && varY.equals("26")) {
+            return "26 4 52 4 53 210";
+        } else if (varX.equals("209") && varY.equals("50")) {
+            return "50 207";
+        } else if (varX.equals("209") && varY.equals("53")) {
+            return "99";
+        }else if (varX.equals("210") && varY.equals("50")) {
+			return "50 207";
+		} else if (varX.equals("210") && varY.equals("53")) {
+			return "99";
+		} else if (varX.equals("211") && varY.equals("27")) {
+			return "27 28 4 29 52 212 53 55 215";
+		} else if (varX.equals("212") && varY.equals("54")) {
+			return "213 214";
+		} else if (varX.equals("212") && varY.equals("61")) {
+			return "213 214";
+		} else if (varX.equals("213") && varY.equals("54")) {
+			return "54 62 54";
+		} else if (varX.equals("213") && varY.equals("61")) {
+			return "61";
+		} else if (varX.equals("214") && varY.equals("50")) {
+			return "50 212";
+		} else if (varX.equals("214") && varY.equals("53")) {
+			return "99";
+		} else if (varX.equals("215") && varY.equals("16")) {
+			return "15";
+		} else if (varX.equals("215") && varY.equals("27")) {
+			return "211";
+		} else if (varX.equals("215") && varY.equals("199")) {
+			return "99";
 		}
+
 		return "-1";
 	}
 	
@@ -481,4 +552,6 @@ public class ParserProcesador {
 	}
 	//
 }
+    
+
     
