@@ -98,6 +98,54 @@ public class Errores {
 			produccionEsperada.equals("85")) {
 			return 208;
 		}
+		if (produccionEsperada.equals("200")) {
+            return 201;
+        }
+        if (produccionEsperada.equals("201")) {
+            return 201;
+        }
+        if (produccionEsperada.equals("202")) {
+            return 205;
+        }
+        if (produccionEsperada.equals("203")) {
+            return 201;
+        }
+        if (produccionEsperada.equals("204")) {
+            return 201;
+        }
+        if (produccionEsperada.equals("205")) {
+            return 205;
+        }
+        if (produccionEsperada.equals("206")) {
+            return 201;
+        }
+        if (produccionEsperada.equals("207")) {
+            return 201;
+        }
+        if (produccionEsperada.equals("208")) {
+            return 201;
+        }
+        if (produccionEsperada.equals("209")) {
+            return 205;
+        }
+        if (produccionEsperada.equals("210")) {
+            return 205;
+        }
+        if (produccionEsperada.equals("211")) {
+            return 201;
+        }
+        if (produccionEsperada.equals("212")) {
+            return 205;
+        }
+        if (produccionEsperada.equals("213")) {
+            return 205;
+        }
+        if (produccionEsperada.equals("214")) {
+            return 205;
+        }
+        if (produccionEsperada.equals("215")) {
+            return 201;
+        }
 		if (produccionEsperada.equals("300")) {
 			return 201;
 		}

@@ -223,42 +223,81 @@ public class ParserProcesador {
 			resultado = "16";
 			break;
 		case "TABLE":
+		case " TABLE":
+		case "TABLE ":
+		case " TABLE ":
 			resultado = "17";
 			break;
 		case "CHAR":
+		case " CHAR":
+		case "CHAR ":
+		case " CHAR ":
 			resultado = "18";
 			break;
 		case "NUMERIC":
+		case " NUMERIC":
+		case "NUMERIC ":
+		case " NUMERIC ":
 			resultado = "19";
 			break;
 		case "NOT":
+		case " NOT":
+		case "NOT ":
+		case " NOT ":
 			resultado = "20";
 			break;
 		case "NULL":
+		case " NULL":
+		case "NULL ":
+		case " NULL ":
 			resultado = "21";
 			break;
 		case "CONSTRAINT":
+		case " CONSTRAINT":
+		case "CONSTRAINT ":
+		case " CONSTRAINT ":
 			resultado = "22";
 			break;
 		case "KEY":
+		case " KEY":
+		case "KEY  ":
+		case " KEY ":
 			resultado = "23";
 			break;
 		case "PRIMARY":
+		case " PRIMARY":
+		case "PRIMARY ":
+		case " PRIMARY ":
 			resultado = "24";
 			break;
 		case "FOREING":
+		case " FOREING":
+		case "FOREING ":
+		case " FOREING ":
 			resultado = "25";
 			break;
 		case "REFERENCES":
+		case " REFERENCES":
+		case "REFERENCES ":
+		case " REFERENCES ":
 			resultado = "26";
 			break;
 		case "INSERT":
+		case " INSERT":
+		case "INSERT ":
+		case " INSERT ":
 			resultado = "27";
 			break;
 		case "INTO":
+		case " INTO":
+		case "INTO ":
+		case " INTO ":
 			resultado = "28";
 			break;
 		case "VALUES":
+		case " VALUES":
+		case "VALUES ":
+		case " VALUES ":
 			resultado = "29";
 			break;
 		case ",":
@@ -368,7 +407,9 @@ public class ParserProcesador {
 		return resultado;
 	}
 
-	//Tabla sintactica 4 = 400
+	//Tabla sintactica 4 = 400 
+	//				   61 = 601
+	//				   62 = 602
 	public String tablaSintactica(String varX, String varY) {
 		
 		if (varY.equals("$")) {
@@ -471,64 +512,64 @@ public class ParserProcesador {
 			return "602";
 		} else if (varX.equals("319") && varY.equals("601")) {
 			return "601";
-		} else if (varX.equals("200") && varY.equals("16")) {
-	            return "16 17 4 52 202 53 55 201";
-	        } else if (varX.equals("201") && varY.equals("16")) {
-	            return "200";
-	        } else if (varX.equals("201") && varY.equals("27")) {
-	            return "211";
-	        } else if (varX.equals("201") && varY.equals("199")) {
-	            return "99";
-	        } else if (varX.equals("202") && varY.equals("4")) {
-	            return "4 203 52 61 53 204 205";
-	        } else if (varX.equals("203") && varY.equals("18")) {
-	            return "18";
-	        } else if (varX.equals("203") && varY.equals("19")) {
-	            return "19";
-	        } else if (varX.equals("204") && varY.equals("20")) {
-	            return "20 21";
-	        } else if (varX.equals("204") && varY.equals("50")) {
-	            return "99";
-	        } else if (varX.equals("205") && varY.equals("50")) {
-	            return "50 206";
-	        } else if (varX.equals("205") && varY.equals("53")) {
-	            return "99";
-	        } else if (varX.equals("206") && varY.equals("4")) {
-	            return "202";
-	        } else if (varX.equals("206") && varY.equals("22")) {
-	            return "207";
-	        } else if (varX.equals("207") && varY.equals("22")) {
-	            return "22 4 208 52 4 53 209";
-	        } else if (varX.equals("208") && varY.equals("24")) {
-	            return "24 23";
-	        } else if (varX.equals("208") && varY.equals("25")) {
-	            return "25 23";
-	        } else if (varX.equals("209") && varY.equals("26")) {
-	            return "26 4 52 4 53 210";
-	        } else if (varX.equals("209") && varY.equals("50")) {
-	            return "50 207";
-	        } else if (varX.equals("209") && varY.equals("53")) {
-	            return "99";
-	        }else if (varX.equals("210") && varY.equals("50")) {
-			return "50 207";
+		} else if (varX.equals("200") && varY.equals("16")) {//16 17 400 52 202 53 55 201
+	        return "16 17 400 202 53 201";
+	    } else if (varX.equals("201") && varY.equals("16")) {
+	        return "200";
+	    } else if (varX.equals("201") && varY.equals("27")) {
+	        return "211";
+	    } else if (varX.equals("201") && varY.equals("199")) {
+	        return "99";
+	    } else if (varX.equals("202") && varY.equals("400")) { //400 203 52 61 53 204 205
+	        return "400 203 601 53 204 205";
+	    } else if (varX.equals("203") && varY.equals("18")) {
+	        return "18";
+	    } else if (varX.equals("203") && varY.equals("19")) {
+	        return "19";
+	    } else if (varX.equals("204") && varY.equals("20")) {
+	        return "20 21";
+	    } else if (varX.equals("204") && varY.equals("50")) {
+	        return "99";
+	    } else if (varX.equals("205") && varY.equals("50")) {
+	        return "50 206";
+	    } else if (varX.equals("205") && varY.equals("53")) {
+	        return "99";
+	    } else if (varX.equals("206") && varY.equals("400")) {
+	        return "202";
+	    } else if (varX.equals("206") && varY.equals("22")) {
+	        return "207";
+	    } else if (varX.equals("207") && varY.equals("22")) { //22 400 208 52 400 53 209
+	        return "22 400 208 400 53 209";
+	    } else if (varX.equals("208") && varY.equals("24")) {
+	        return "24 23";
+	    } else if (varX.equals("208") && varY.equals("25")) {
+	        return "25 23";
+	    } else if (varX.equals("209") && varY.equals("26")) { // 26 400 52 400 53 210
+	        return "26 400 52 400 53 210";
+	    } else if (varX.equals("209") && varY.equals("50")) {
+	        return "50 207";
+	    } else if (varX.equals("209") && varY.equals("53")) {
+	        return "99";
+	    }else if (varX.equals("210") && varY.equals("50")) {
+	    	return "50 207";
 		} else if (varX.equals("210") && varY.equals("53")) {
 			return "99";
-		} else if (varX.equals("211") && varY.equals("27")) {
-			return "27 28 4 29 52 212 53 55 215";
+		} else if (varX.equals("211") && varY.equals("27")) {//27 28 400 29 52 212 53 55 215
+			return "27 28 400 29 212 53 215";
 		} else if (varX.equals("212") && varY.equals("54")) {
 			return "213 214";
-		} else if (varX.equals("212") && varY.equals("61")) {
+		} else if (varX.equals("212") && varY.equals("601")) {
 			return "213 214";
 		} else if (varX.equals("213") && varY.equals("54")) {
-			return "54 62 54";
-		} else if (varX.equals("213") && varY.equals("61")) {
-			return "61";
+			return "54 602 54";
+		} else if (varX.equals("213") && varY.equals("601")) {
+			return "601";
 		} else if (varX.equals("214") && varY.equals("50")) {
 			return "50 212";
 		} else if (varX.equals("214") && varY.equals("53")) {
 			return "99";
 		} else if (varX.equals("215") && varY.equals("16")) {
-			return "15";
+			return "200";
 		} else if (varX.equals("215") && varY.equals("27")) {
 			return "211";
 		} else if (varX.equals("215") && varY.equals("199")) {
