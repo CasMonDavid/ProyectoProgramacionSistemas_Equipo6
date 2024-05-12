@@ -472,44 +472,44 @@ public class ParserProcesador {
 		} else if (varX.equals("319") && varY.equals("601")) {
 			return "601";
 		} else if (varX.equals("200") && varY.equals("16")) {
-            return "16 17 4 52 202 53 55 201";
-        } else if (varX.equals("201") && varY.equals("16")) {
-            return "200";
-        } else if (varX.equals("201") && varY.equals("27")) {
-            return "211";
-        } else if (varX.equals("201") && varY.equals("199")) {
-            return "99";
-        } else if (varX.equals("202") && varY.equals("4")) {
-            return "4 203 52 61 53 204 205";
-        } else if (varX.equals("203") && varY.equals("18")) {
-            return "18";
-        } else if (varX.equals("203") && varY.equals("19")) {
-            return "19";
-        } else if (varX.equals("204") && varY.equals("20")) {
-            return "20 21";
-        } else if (varX.equals("204") && varY.equals("50")) {
-            return "99";
-        } else if (varX.equals("205") && varY.equals("50")) {
-            return "50 206";
-        } else if (varX.equals("205") && varY.equals("53")) {
-            return "99";
-        } else if (varX.equals("206") && varY.equals("4")) {
-            return "202";
-        } else if (varX.equals("206") && varY.equals("22")) {
-            return "207";
-        } else if (varX.equals("207") && varY.equals("22")) {
-            return "22 4 208 52 4 53 209";
-        } else if (varX.equals("208") && varY.equals("24")) {
-            return "24 23";
-        } else if (varX.equals("208") && varY.equals("25")) {
-            return "25 23";
-        } else if (varX.equals("209") && varY.equals("26")) {
-            return "26 4 52 4 53 210";
-        } else if (varX.equals("209") && varY.equals("50")) {
-            return "50 207";
-        } else if (varX.equals("209") && varY.equals("53")) {
-            return "99";
-        }else if (varX.equals("210") && varY.equals("50")) {
+	            return "16 17 4 52 202 53 55 201";
+	        } else if (varX.equals("201") && varY.equals("16")) {
+	            return "200";
+	        } else if (varX.equals("201") && varY.equals("27")) {
+	            return "211";
+	        } else if (varX.equals("201") && varY.equals("199")) {
+	            return "99";
+	        } else if (varX.equals("202") && varY.equals("4")) {
+	            return "4 203 52 61 53 204 205";
+	        } else if (varX.equals("203") && varY.equals("18")) {
+	            return "18";
+	        } else if (varX.equals("203") && varY.equals("19")) {
+	            return "19";
+	        } else if (varX.equals("204") && varY.equals("20")) {
+	            return "20 21";
+	        } else if (varX.equals("204") && varY.equals("50")) {
+	            return "99";
+	        } else if (varX.equals("205") && varY.equals("50")) {
+	            return "50 206";
+	        } else if (varX.equals("205") && varY.equals("53")) {
+	            return "99";
+	        } else if (varX.equals("206") && varY.equals("4")) {
+	            return "202";
+	        } else if (varX.equals("206") && varY.equals("22")) {
+	            return "207";
+	        } else if (varX.equals("207") && varY.equals("22")) {
+	            return "22 4 208 52 4 53 209";
+	        } else if (varX.equals("208") && varY.equals("24")) {
+	            return "24 23";
+	        } else if (varX.equals("208") && varY.equals("25")) {
+	            return "25 23";
+	        } else if (varX.equals("209") && varY.equals("26")) {
+	            return "26 4 52 4 53 210";
+	        } else if (varX.equals("209") && varY.equals("50")) {
+	            return "50 207";
+	        } else if (varX.equals("209") && varY.equals("53")) {
+	            return "99";
+	        }else if (varX.equals("210") && varY.equals("50")) {
 			return "50 207";
 		} else if (varX.equals("210") && varY.equals("53")) {
 			return "99";
