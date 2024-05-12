@@ -65,13 +65,18 @@ public class ParserProcesador {
 		
 		// SIEMPRE INICIARA CON UN SIMBOLO DE DOLAR AL FONDO Y LA UNICA REGLA INICIAL QUE HAREMOS "SELECT" CON EL SIMBOLO "Q"
 		pilaReglas.push("199");
-        if (pilaLexica.get(0).equals("SELECT")) {
-            pilaReglas.push("300");
-            System.out.println("Es select");
-        }else {
-            pilaReglas.push("200");
-            System.out.println("Es create");
-        }
+        switch (pilaLexica.get(0)) {
+		case "SELECT":
+			pilaReglas.push("300");
+			break;
+		case "CREATE":
+			pilaReglas.push("200");
+			break;
+		case "INSERT":
+			pilaReglas.push("211");
+			break;
+		default:break;
+		}
 		//
 		
 		// ESTE ES EL CICLO QUE SE VE EN EL VIDEO, EL CICLO SE MANTENDRA HASTA QUE LLEGEMOS AL FINAL DE LA VARIABLE "Pila"
