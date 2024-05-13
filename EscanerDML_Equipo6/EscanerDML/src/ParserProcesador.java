@@ -10,6 +10,7 @@ public class ParserProcesador {
     public List<PropiedadesCadena> listaLexica;
     public String[][] terminales;
     public String[] producciones;
+    public boolean esDentroComillas;
     public Errores excepcion;
     
 	public ParserProcesador() {
@@ -51,6 +52,7 @@ public class ParserProcesador {
 								  {"<=","8"}};
 		this.terminales = terminales;
 		excepcion = new Errores();
+		esDentroComillas=false;
 	}
 	
 	// PROCESADOR CENTRAL DE LA SINTAXIS
@@ -83,7 +85,31 @@ public class ParserProcesador {
 		do { System.out.println("");
 			varX = pilaReglas.pop();
 			if (apuntador>0 && apuntador<pilaLexica.size()-1) {
-				varK = devolverValorTerminal(pilaLexica.get(apuntador), pilaLexica.get(apuntador+1), pilaLexica.get(apuntador-1));
+				if (pilaLexica.get(apuntador-1).equals("'")) {// SOLUCION PARA EL BUG DE LAS CONSTANTES CON ESPACIOS EN BLANCO
+					if (apuntador<pilaLexica.size()-1 &&
+						pilaLexica.get(apuntador+1).equals("'") &&
+						(devolverValorTerminal(pilaLexica.get(apuntador), "-1", "-1").equals("400") ||
+						devolverValorTerminal(pilaLexica.get(apuntador), "-1", "-1").equals("602") ||
+						devolverValorTerminal(pilaLexica.get(apuntador), "-1", "-1").equals("601"))) {
+						varK = "602";
+					}else if(apuntador<pilaLexica.size()-2 &&
+							pilaLexica.get(apuntador+2).equals("'") &&
+							 (devolverValorTerminal(pilaLexica.get(apuntador), "-1", "-1").equals("400") ||
+							 devolverValorTerminal(pilaLexica.get(apuntador), "-1", "-1").equals("602"))) {
+						varK = "602";
+						apuntador++;
+					}else if(apuntador<pilaLexica.size()-3 &&
+							pilaLexica.get(apuntador+3).equals("'") &&
+							(devolverValorTerminal(pilaLexica.get(apuntador), "-1", "-1").equals("400") ||
+							 devolverValorTerminal(pilaLexica.get(apuntador), "-1", "-1").equals("602"))) {
+						varK = "602";
+						apuntador+=2;
+					}else {
+						varK = devolverValorTerminal(pilaLexica.get(apuntador), "-1", "-1");
+					}
+				}else {					
+					varK = devolverValorTerminal(pilaLexica.get(apuntador), pilaLexica.get(apuntador+1), pilaLexica.get(apuntador-1));
+				}
 			}else {
 				varK = devolverValorTerminal(pilaLexica.get(apuntador), "-1", "-1");
 			}
@@ -275,10 +301,10 @@ public class ParserProcesador {
 		case " PRIMARY ":
 			resultado = "24";
 			break;
-		case "FOREING":
-		case " FOREING":
-		case "FOREING ":
-		case " FOREING ":
+		case "FOREIGN":
+		case " FOREIGN":
+		case "FOREIGN ":
+		case " FOREIGN ":
 			resultado = "25";
 			break;
 		case "REFERENCES":
