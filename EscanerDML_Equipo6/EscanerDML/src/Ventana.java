@@ -1,3 +1,4 @@
+    
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
@@ -25,33 +26,32 @@ import javax.swing.text.DocumentFilter;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
-import javax.swing.text.html.HTMLEditorKit.Parser;
 
 public class Ventana extends JFrame {
 	private final Escaner escanear;
 	private final ParserProcesador parser;
-    private List<PropiedadesCadena> resultados;
+	private List<PropiedadesCadena> resultados;
 	JTextPane jtaTexto;
 	private Errores excepcion;
 
-    public Ventana() {
-        escanear = new Escaner();
-        parser = new ParserProcesador();
-        resultados = new ArrayList<>();
-        configurarVentana();
-        panelMenu();
-    }
+	public Ventana() {
+		escanear = new Escaner();
+		parser = new ParserProcesador();
+		resultados = new ArrayList<>();
+		configurarVentana();
+		panelMenu();
+	}
 
-    private void configurarVentana() {
-        setVisible(true);
-        setSize(1100, 800);
-        setLocationRelativeTo(null);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setIconImage(new ImageIcon("src/icon.png").getImage());
-        setResizable(false);
-        setTitle("Scan");
-    }
-	
+	private void configurarVentana() {
+		setVisible(true);
+		setSize(1100, 800);
+		setLocationRelativeTo(null);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setIconImage(new ImageIcon("src/icon.png").getImage());
+		setResizable(false);
+		setTitle("Scan");
+	}
+
 	public void panelMenu() {
 		JPanel pnlPrincipal = new JPanel();
 		pnlPrincipal.setSize(1100,800);
@@ -108,11 +108,16 @@ public class Ventana extends JFrame {
 		pnlPrincipal.add(jlTablaFondo);
 
 		jtaTexto = new JTextPane();
-		jtaTexto.setBounds(85, 45, 1080, 780);
-		jtaTexto.setBackground(null);
+		jtaTexto.setBackground(new Color(30,31,34,255));
 		jtaTexto.setForeground(new Color(215,215,215));
 		jtaTexto.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		jtaTexto.setCaretColor(new Color(215,215,215));
+		jtaTexto.setAutoscrolls(true);
+
+		JScrollPane scroll = new JScrollPane(jtaTexto, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		scroll.setBounds(85, 45, 995, 700);
+		scroll.setBorder(null);
+		pnlPrincipal.add(scroll);
 
 		StyledDocument doc = jtaTexto.getStyledDocument();
 
@@ -221,12 +226,12 @@ public class Ventana extends JFrame {
 				for (int i = resultados.size(); i < escanear.analizarCadena(jtaTexto.getText()).size(); i++) {
 					resultados.add(escanear.analizarCadena(jtaTexto.getText()).get(i));
 				}
-				
+
 				// SE LE PASAN LOS DATOS DE RESULTADO AL PARSER PARA SU PROCESO
-				parser.setlistaLexica(resultados);  
+				parser.setlistaLexica(resultados);
 				parser.pruebas();
-				
-				
+
+
 				if (escanear.isLexicoCorrecto()) {
 					if (parser.procesarSintaxis()) {
 						JOptionPane.showMessageDialog(null, "¡¡La sentencia es correcta!!", "Exito", JOptionPane.INFORMATION_MESSAGE);
@@ -254,17 +259,17 @@ public class Ventana extends JFrame {
 				for (int i = resultados.size(); i < escanear.analizarCadena(jtaTexto.getText()).size(); i++) {
 					resultados.add(escanear.analizarCadena(jtaTexto.getText()).get(i));
 				}
-				
+
 				// SE LE PASAN LOS DATOS DE RESULTADO AL PARSER PARA SU PROCESO
-				parser.setlistaLexica(resultados);  
+				parser.setlistaLexica(resultados);
 				parser.pruebas();
 				parser.procesarSintaxis();
-				
+
 				frameTabla();
 			}
 		});
 
-		pnlPrincipal.add(jtaTexto);
+
 		pnlPrincipal.add(pnlLine);
 		pnlPrincipal.add(pnlLineTwo);
 		this.add(pnlPrincipal);
@@ -273,93 +278,95 @@ public class Ventana extends JFrame {
 	}
 
 	public void frameTabla() {
-        JFrame frameTabla = new JFrame();
-        configurarFrameTabla(frameTabla);
-        panelTabla(frameTabla);
-    }
+		JFrame frameTabla = new JFrame();
+		configurarFrameTabla(frameTabla);
+		panelTabla(frameTabla);
+	}
 
-    private void configurarFrameTabla(JFrame frameTabla) {
-        frameTabla.setVisible(true);
-        frameTabla.setSize(500, 800);
-        frameTabla.setLocationRelativeTo(null);
-        frameTabla.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frameTabla.setIconImage(new ImageIcon("src/icon.png").getImage());
-        frameTabla.setResizable(false);
-        frameTabla.setTitle("Tabla");
-    }
+	private void configurarFrameTabla(JFrame frameTabla) {
+		frameTabla.setVisible(true);
+		frameTabla.setSize(500, 800);
+		frameTabla.setLocationRelativeTo(null);
+		frameTabla.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frameTabla.setIconImage(new ImageIcon("src/icon.png").getImage());
+		frameTabla.setResizable(false);
+		frameTabla.setTitle("Tabla");
+	}
 
 	private void panelTabla(JFrame frame) {
-    JPanel pnlPrincipal = new JPanel(new BorderLayout());
-    pnlPrincipal.setBackground(Color.WHITE);
+		JPanel pnlPrincipal = new JPanel(new BorderLayout());
+		pnlPrincipal.setBackground(Color.WHITE);
 
-    DefaultTableModel model = new DefaultTableModel();
-    model.addColumn("No.");
-    model.addColumn("Línea");
-    model.addColumn("TOKEN");
-    model.addColumn("Tipo");
-    model.addColumn("Código");
+		DefaultTableModel model = new DefaultTableModel();
+		model.addColumn("No.");
+		model.addColumn("Línea");
+		model.addColumn("TOKEN");
+		model.addColumn("Tipo");
+		model.addColumn("Código");
 
-    if (!resultados.isEmpty()) {
-		int valorIdentificador = 401;
-		int valorConstante = 600;
-        for (int i = 0; i < resultados.size(); i++) {
-            PropiedadesCadena propiedades = resultados.get(i);
-            String token = propiedades.getCadena();
-            int tipo = propiedades.getTipoPalabra()[0];
-            int codigo = propiedades.getCodigo();
-            int numLinea = propiedades.getNumLinea();
+		if (!resultados.isEmpty()) {
+			int valorIdentificador = 401;
+			int valorConstante = 600;
+			for (int i = 0; i < resultados.size(); i++) {
+				PropiedadesCadena propiedades = resultados.get(i);
+				String token = propiedades.getCadena();
+				int tipo = propiedades.getTipoPalabra()[0];
+				int codigo = propiedades.getCodigo();
+				int numLinea = propiedades.getNumLinea();
 
-            // Determinar el tipo y código basado en el token
-            switch (tipo) {
-                case 1: // Palabra reservada
-                    model.addRow(new Object[]{i + 1, numLinea, token, "1", codigo});
-                    break;
-                case 2: // Operador
-                    model.addRow(new Object[]{i + 1, numLinea, token, "7", codigo});
-                    break;
-                case 3: // Delimitador
-                    model.addRow(new Object[]{i + 1, numLinea, token, "5", codigo});
-                    break;
-                case 4: // Identificador
-                    model.addRow(new Object[]{i + 1, numLinea, token, "4", valorIdentificador});
-					valorIdentificador++;
-                    break;
-                case 5: // Constante
-                    model.addRow(new Object[]{i + 1, numLinea, token, "6", valorConstante});
-					valorConstante++;
-                    break;
-                case 6: // Relación
-                    model.addRow(new Object[]{i + 1, numLinea, token, "8", codigo});
-                    break;
-                default:
-                    // Tipo desconocido
-                    break;
-            }
-        }
-    }
-
-	frame.addWindowListener(new WindowAdapter() {
-		@Override
-		public void windowClosing(WindowEvent e) {
-			int rowCount = model.getRowCount();
-			while (rowCount > 0) {
-				model.removeRow(0);
-				rowCount = model.getRowCount();
-				if (!resultados.isEmpty()) {
-					resultados = new ArrayList<>();
+				// Determinar el tipo y código basado en el token
+				switch (tipo) {
+					case 1: // Palabra reservada
+						model.addRow(new Object[]{i + 1, numLinea, token, "1", codigo});
+						break;
+					case 2: // Operador
+						model.addRow(new Object[]{i + 1, numLinea, token, "7", codigo});
+						break;
+					case 3: // Delimitador
+						model.addRow(new Object[]{i + 1, numLinea, token, "5", codigo});
+						break;
+					case 4: // Identificador
+						model.addRow(new Object[]{i + 1, numLinea, token, "4", valorIdentificador});
+						valorIdentificador++;
+						break;
+					case 5: // Constante
+						model.addRow(new Object[]{i + 1, numLinea, token, "6", valorConstante});
+						valorConstante++;
+						break;
+					case 6: // Relación
+						model.addRow(new Object[]{i + 1, numLinea, token, "8", codigo});
+						break;
+					default:
+						// Tipo desconocido
+						break;
 				}
 			}
 		}
-	});
 
-    JTable table = new JTable(model);
-    table.setEnabled(false);
-    JScrollPane scrollPane = new JScrollPane(table);
+		frame.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				int rowCount = model.getRowCount();
+				while (rowCount > 0) {
+					model.removeRow(0);
+					rowCount = model.getRowCount();
+					if (!resultados.isEmpty()) {
+						resultados = new ArrayList<>();
+					}
+				}
+			}
+		});
 
-    pnlPrincipal.add(scrollPane, BorderLayout.CENTER);
-    frame.add(pnlPrincipal);
+		JTable table = new JTable(model);
+		table.setEnabled(false);
+		JScrollPane scrollPane = new JScrollPane(table);
+
+		pnlPrincipal.add(scrollPane, BorderLayout.CENTER);
+		frame.add(pnlPrincipal);
+	}
+
 }
 
-}
+    
 
     

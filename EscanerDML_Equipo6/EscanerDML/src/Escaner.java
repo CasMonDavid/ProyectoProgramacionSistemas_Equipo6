@@ -104,7 +104,7 @@ public class Escaner {
 			// separa y lo manda analizar, pero solo analiza la linea para que siga detectando el donde se encuentra
 			String regexUniversalSQL = "SELECT|INSERT|UPDATE|DELETE|CREATE|DROP|ALTER|FROM|JOIN|WHERE|GROUP|BY|ORDER|BY|HAVING|AND|OR|NOT|AS|INTO|VALUES|"
 					+ "SET|TABLE|DATABASE|CONSTRAINT|INDEX|FOREIGN|KEY|PRIMARY|KEY|UNIQUE|CHECK|DEFAULT|NULL|//s+IS//s+|LIKE|\\s+IN\\s+|BETWEEN|EXISTS|ALL|ANY|CASE|"
-					+ "WHEN|THEN|ELSE|END|LIMIT|&|<=|>=|>|<|=|'|\\s'|\\b\\w*[_]\\w*|\\b[a-zA-Z0-9]+[#]?|\\*|\\(|\\)|[,.'()]|\\s?(?=.+[^a-zA-Z0-9])[a-zA-Z0-9!'#\\$%&\\/]{3,}\\s?";
+					+ "WHEN|THEN|ELSE|END|LIMIT|&|<=|>=|>|<|=|'|\\s'|\\s*?\\b\\w*[_]\\w*|\\s*?[a-zA-Z0-9]+[#]?\\b?|\\*|\\(|\\)|[,.'()]|\\s?(?=.+[^a-zA-Z0-9])[a-zA-Z0-9!'#\\$%&\\/]{3,}\\s?";
 			Pattern pattern = Pattern.compile(regexUniversalSQL, Pattern.CASE_INSENSITIVE);
 			Matcher matcher = pattern.matcher(linea);
 	        // FIN MODIFICACION //

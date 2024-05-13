@@ -550,7 +550,7 @@ public class ParserProcesador {
 	    } else if (varX.equals("208") && varY.equals("25")) {
 	        return "25 23";
 	    } else if (varX.equals("209") && varY.equals("26")) { // 26 400 52 400 53 210
-	        return "26 400 52 400 53 210";
+	        return "26 400 400 53 210";
 	    } else if (varX.equals("209") && varY.equals("50")) {
 	        return "50 207";
 	    } else if (varX.equals("209") && varY.equals("53")) {
